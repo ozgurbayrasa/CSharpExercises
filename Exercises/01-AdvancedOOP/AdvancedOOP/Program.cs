@@ -100,23 +100,42 @@
 
 //}
 
-using AdvancedOOP.Extensions;
+//using AdvancedOOP.Extensions;
 
-var multiline = @"aaaa
-bbbb
-cccc
-dddd";
+//var multiline = @"aaaa
+//bbbb
+//cccc
+//dddd";
 
-Console.WriteLine("Count of lines is " + multiline.CountLines());
+//Console.WriteLine("Count of lines is " + multiline.CountLines());
 
-Console.WriteLine("Next season after winter is: " + Season.Winter.Next()); 
-// Next season after winter is Spring
+//Console.WriteLine("Next season after winter is: " + Season.Winter.Next()); 
+//// Next season after winter is Spring
+
+
 
 Console.ReadKey();
 
+public class Bird : IFlyable
+{
+    public void Tweet() => Console.WriteLine("Tweet Tweet! ");
+    public void Fly() => Console.WriteLine("Flying with wings!");
+}
 
+public class Kite : IFlyable
+{
+    public void Fly() => Console.WriteLine("Flying carried by wing!");
+}
 
+public class Plane : IFlyable
+{
+    public void Fly() => Console.WriteLine("Flying with plane.");
+}
 
+public interface IFlyable
+{
+    void Fly();
+}
 
 
 public enum Season
