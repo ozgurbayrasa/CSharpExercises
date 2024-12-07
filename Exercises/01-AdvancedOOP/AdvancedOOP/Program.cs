@@ -76,6 +76,41 @@
 ////    Console.WriteLine(cheddar);
 ////}
 
+// A list of ingredients with reference to base classes.
+
+// ABSTRACT METHODS
+
+//var ingredients = new List<Ingredient>
+//{
+//    new Cheddar(2, 12),
+//    new TomatoSauce(2, 12)
+//};
+
+//foreach (Ingredient ingredient in ingredients)
+//{
+//    // If there wasn't any abstract method Prepare in Ingredient
+//    // class, compiler would not call that method.
+//    ingredient.Prepare();
+//}
+
+// SEALED CLASSES
+
+//public sealed class BetterString : string
+//{
+
+//}
+
+using AdvancedOOP.Extensions;
+
+var multiline = @"aaaa
+bbbb
+cccc
+dddd";
+
+Console.WriteLine("Count of lines is " + multiline.CountLines());
+
+Console.WriteLine("Next season after winter is: " + Season.Winter.Next()); 
+// Next season after winter is Spring
 
 Console.ReadKey();
 

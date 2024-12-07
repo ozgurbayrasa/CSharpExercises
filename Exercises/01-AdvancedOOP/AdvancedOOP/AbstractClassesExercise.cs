@@ -1,72 +1,71 @@
 ﻿
-namespace Coding.Exercise
+namespace AbstractClassesExercises;
+
+public static class ExerciseShapes
 {
-    public static class ExerciseShapes
+    public static List<double> GetShapesAreas(List<Shape> shapes)
     {
-        public static List<double> GetShapesAreas(List<Shape> shapes)
+        var result = new List<double>();
+
+        foreach (var shape in shapes)
         {
-            var result = new List<double>();
-
-            foreach (var shape in shapes)
-            {
-                result.Add(shape.CalculateArea());
-            }
-
-            return result;
+            result.Add(shape.CalculateArea());
         }
+
+        return result;
+    }
+}
+
+public abstract class Shape
+{
+    public abstract double CalculateArea();
+
+}
+
+public class Square : Shape
+{
+    public double Side { get; }
+
+    public Square(double side)
+    {
+        Side = side;
     }
 
-    public abstract class Shape
+    public override double CalculateArea()
     {
-        public abstract double CalculateArea();
+        return Side * Side;
+    }
+}
 
+
+public class Rectangle : Shape
+{
+    public double Width { get; }
+    public double Height { get; }
+
+    public Rectangle(double width, double height)
+    {
+        Width = width;
+        Height = height;
     }
 
-    public class Square : Shape
+    public override double CalculateArea()
     {
-        public double Side { get; }
+        return Width * Height;
+    }
+}
 
-        public Square(double side)
-        {
-            Side = side;
-        }
+public class Circle : Shape
+{
+    public double Radius { get; }
 
-        public override double CalculateArea()
-        {
-            return Side * Side;
-        }
+    public Circle(double radius)
+    {
+        Radius = radius;
     }
 
-
-    public class Rectangle : Shape
+    public override double CalculateArea()
     {
-        public double Width { get; }
-        public double Height { get; }
-
-        public Rectangle(double width, double height)
-        {
-            Width = width;
-            Height = height;
-        }
-
-        public override double CalculateArea()
-        {
-            return Width * Height;
-        }
-    }
-
-    public class Circle : Shape
-    {
-        public double Radius { get; }
-
-        public Circle(double radius)
-        {
-            Radius = radius;
-        }
-
-        public override double CalculateArea()
-        {
-            return Radius * Math.PI * Radius;
-        }
+        return Radius * Math.PI * Radius;
     }
 }
