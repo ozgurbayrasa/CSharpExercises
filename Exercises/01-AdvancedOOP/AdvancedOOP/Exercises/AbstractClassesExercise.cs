@@ -1,5 +1,4 @@
-﻿
-namespace AbstractClassesExercises;
+﻿namespace AdvancedOOP.Exercises;
 
 public static class ExerciseShapes
 {
