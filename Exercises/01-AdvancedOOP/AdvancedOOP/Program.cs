@@ -76,17 +76,17 @@
 ////    Console.WriteLine(cheddar);
 ////}
 
-using Coding.Exercise;
+//using Coding.Exercise;
 
-int x = 25;
-double y = 2.5;
-decimal z = 10.000254m;
-string k = "kak";
+//int x = 25;
+//double y = 2.5;
+//decimal z = 10.000254m;
+//string k = "kak";
 
-NumericTypesDescriber.Describe(x);
-NumericTypesDescriber.Describe(y);
-NumericTypesDescriber.Describe(z);
-NumericTypesDescriber.Describe(k);
+//NumericTypesDescriber.Describe(x);
+//NumericTypesDescriber.Describe(y);
+//NumericTypesDescriber.Describe(z);
+//NumericTypesDescriber.Describe(k);
 
 Console.ReadKey();
 
