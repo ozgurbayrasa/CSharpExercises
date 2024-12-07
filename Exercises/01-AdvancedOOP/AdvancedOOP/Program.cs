@@ -76,54 +76,8 @@
 ////    Console.WriteLine(cheddar);
 ////}
 
-//using Coding.Exercise;
-
-//int x = 25;
-//double y = 2.5;
-//decimal z = 10.000254m;
-//string k = "kak";
-
-//NumericTypesDescriber.Describe(x);
-//NumericTypesDescriber.Describe(y);
-//NumericTypesDescriber.Describe(z);
-//NumericTypesDescriber.Describe(k);
 
 Console.ReadKey();
-
-namespace Coding.Exercise
-{
-    public static class NumericTypesDescriber
-    {
-        public static string Describe(object someObject)
-        {
-            if(someObject is int)
-            {
-                int someInt = (int) someObject;
-                return $"Int, of value {someInt}";
-            }
-
-            else if (someObject is decimal)
-            {
-                decimal someDecimal = (decimal) someObject;
-                return $"Decimal, of value {someDecimal}";
-            }
-
-            else if (someObject is double)
-            {
-                double someDouble = (double) someObject;
-                return $"Double, of value {someDouble}";
-            }
-
-            else
-            {
-                return null;
-            }
-        }
-
-        
-    }
-}
-
 
 
 
@@ -149,9 +103,14 @@ public class Pizza
 }
 
 
-// Cheddar class derived from Ingredient class.
-public class Cheddar : Ingredient
+// Cheddar class derived from Cheese class which is derived from Ingredient class.
+public class Cheddar : Cheese
 {
+    // Abstract method implementation in derived class.
+    public override void Prepare()
+    {
+        Console.WriteLine("Prepare Cheddar!"); ;
+    }
 
     // You can refer to a base class property over base keyword.
     public override string Name => $"{base.Name}, more specifically, a cheddar " +
@@ -180,12 +139,18 @@ public class Cheddar : Ingredient
         Console.WriteLine(ProtectedMethod());
         // Console.WriteLine(PrivateMethod());
     }
+
+    
 }
 
 
 // Cheddar class derived from Ingredient class.
 public class TomatoSauce : Ingredient
 {
+    public override void Prepare()
+    {
+        Console.WriteLine("Prepare Tomato Sauce!"); ;
+    }
 
     // You can refer to a base class property over base keyword.
     public override string Name => $"{base.Name}, more specifically, a cheddar " +
@@ -214,15 +179,23 @@ public class TomatoSauce : Ingredient
         Console.WriteLine(ProtectedMethod());
         // Console.WriteLine(PrivateMethod());
     }
+
+
 }
 
-//public class Cheese : Ingredient
-//{
-//    public override string Name => "Cheese";
-//}
-
-public class Ingredient
+public abstract class Cheese : Ingredient
 {
+    public Cheese(int priceIfExtraTopping) : base(priceIfExtraTopping)
+    {
+
+    }
+}
+
+public abstract class Ingredient
+{
+    // Abstract method: Prepare()
+    public abstract void Prepare();
+
     public virtual string Name { get; } = "Some ingredient.";
 
     // One-parameter constructor for Base Class - Ingredient.
@@ -233,6 +206,7 @@ public class Ingredient
     }
 
     public int PriceIfExtraTopping { get; }
+
 
     public string PublicMethod() => "This method is public in Ingredient class.";
     protected string ProtectedMethod() => "This method is protected in Ingredient class.";
