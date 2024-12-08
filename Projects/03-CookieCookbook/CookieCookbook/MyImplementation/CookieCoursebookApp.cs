@@ -8,9 +8,9 @@ namespace CookieCookbook.MyImplementation
         {
             // Check if there are saved recipes.
 
-            // Printing ingredients.
+            CookieCoursebookMessageHandler.PrintAvailableIngredients(IngredientListFactory.RetrieveIngredientList());
 
-            // Selecting ingredints until a loop ends.
+            UserInputHandler.GetSelectedIngredients();
 
             // Save selected ingredients to a file .txt or .json
 
