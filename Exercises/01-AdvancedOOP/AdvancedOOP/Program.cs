@@ -112,9 +112,28 @@
 //Console.WriteLine("Next season after winter is: " + Season.Winter.Next()); 
 //// Next season after winter is Spring
 
+using System.Text.Json;
 
+Person person = new Person
+{
+    Name = "John",
+    LastName = "Smith"
+};
+
+// Serializing.
+var asJson = JsonSerializer.Serialize(person);
+Console.WriteLine(asJson);
+
+// Deserializing.
+var personFromJson = JsonSerializer.Deserialize<Person>(asJson);
 
 Console.ReadKey();
+
+public class Person
+{
+    public String Name { get; set; }
+    public String LastName { get; set; }
+};
 
 public class Bird : IFlyable
 {
