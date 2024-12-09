@@ -1,13 +1,27 @@
 ﻿
-namespace CookieCookbook.MyImplementation
+namespace CookieCookbook.App
 {
     public class Recipe
     {
-        static readonly List<Ingredient> RecipeIngredients = new List<Ingredient>();
+        public readonly static List<Ingredient> RecipeIngredients = new List<Ingredient>();
 
         public void addIngredientToRecipe(Ingredient ingredient)
         {
             RecipeIngredients.Add(ingredient);
+        }
+
+        public static int[] GetRecipeIngredientsIDs()
+        {
+            int[] recipeIngredientsIDs = new int[RecipeIngredients.Count];
+
+            foreach (Ingredient ingredient in RecipeIngredients)
+            {
+                int ingredientID = ingredient.Id;
+                int ingredientIndex = RecipeIngredients.IndexOf(ingredient);
+                recipeIngredientsIDs[ingredientIndex] = ingredientID;
+            }
+
+            return recipeIngredientsIDs;
         }
 
         public void addIngredientToRecipe(int selectedIngredentID)

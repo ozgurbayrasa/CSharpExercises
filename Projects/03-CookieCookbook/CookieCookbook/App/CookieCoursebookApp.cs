@@ -1,12 +1,14 @@
 ﻿
 
-namespace CookieCookbook.MyImplementation
+namespace CookieCookbook.App
 {
     static class Main
     {
+        const FileFormat fileFormat = FileFormat.Json;
         public static void ExecuteCookieCookbookApp()
         {
             // Check if there are saved recipes.
+            //FileHandler.LoadRecipe(fileFormat);
 
             // Print Welcome Message.
             CookieCoursebookMessageHandler.PrintWelcomeMessage();
@@ -15,9 +17,10 @@ namespace CookieCookbook.MyImplementation
             CookieCoursebookMessageHandler.PrintAvailableIngredients(IngredientListFactory.RetrieveIngredientList());
 
             // Get recipe from user.
-            Recipe userRecipe = UserInputHandler.GetRecipeFromUserInput();
+            UserInputHandler.GenerateRecipeFromUserInput();
 
             // Save recipe to a file .txt or .json
+            FileHandler.SaveRecipe(fileFormat);
 
             // End
             Console.ReadKey();

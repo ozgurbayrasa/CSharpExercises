@@ -1,4 +1,4 @@
-﻿namespace CookieCookbook.MyImplementation
+﻿namespace CookieCookbook.App
 {
     public static class CookieCoursebookMessageHandler
     {
@@ -13,11 +13,6 @@
             {
                 Console.WriteLine($"{ingredient.Id}. {ingredient.Name}");
             }
-        }
-
-        public static void PrintSuccessMessage(string message)
-        {
-            Console.WriteLine($"[Cookie Success]: {message}");
         }
     }
 }

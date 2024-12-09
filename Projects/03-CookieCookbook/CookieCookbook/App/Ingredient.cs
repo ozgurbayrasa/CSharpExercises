@@ -1,4 +1,4 @@
-﻿namespace CookieCookbook.MyImplementation
+﻿namespace CookieCookbook.App
 {
     // Abstract class for Ingredients.
     public abstract class Ingredient

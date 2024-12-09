@@ -1,8 +1,8 @@
-﻿namespace CookieCookbook.MyImplementation
+﻿namespace CookieCookbook.App
 {
     public static class UserInputHandler
     {
-        public static Recipe GetRecipeFromUserInput()
+        public static Recipe GenerateRecipeFromUserInput()
         {
             Recipe recipe = new Recipe();
             bool isUserStopSelecting = false;

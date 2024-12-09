@@ -1,4 +1,4 @@
-﻿namespace CookieCookbook.MyImplementation
+﻿namespace CookieCookbook.App
 {
     public class WheatFlour : Ingredient
     {

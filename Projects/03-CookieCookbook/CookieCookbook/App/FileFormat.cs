@@ -1,5 +1,5 @@
 ﻿
-namespace CookieCookbook.MyImplementation
+namespace CookieCookbook.App
 {
     public enum FileFormat
     {
