@@ -1,6 +1,9 @@
-﻿
-namespace CookieCookbook.App
+﻿using CookieCookbook.App;
+using CookieCookbook.Recipes.Ingredients;
+
+namespace CookieCookbook.Recipes
 {
+    // A Recipe class is simply a collection of ingredients.
     public class Recipe
     {
         public readonly static List<Ingredient> RecipeIngredients = new List<Ingredient>();
@@ -27,7 +30,7 @@ namespace CookieCookbook.App
         public void addIngredientToRecipe(int selectedIngredentID)
         {
 
-            switch(selectedIngredentID)
+            switch (selectedIngredentID)
             {
                 case 1:
                     RecipeIngredients.Add(new WheatFlour());

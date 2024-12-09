@@ -1,4 +1,5 @@
-﻿
+﻿using CookieCookbook.Recipes.Ingredients;
+
 namespace CookieCookbook.App
 {
     public static class IngredientListFactory

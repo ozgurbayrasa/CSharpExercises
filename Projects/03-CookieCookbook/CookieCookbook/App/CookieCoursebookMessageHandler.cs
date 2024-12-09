@@ -1,4 +1,6 @@
-﻿namespace CookieCookbook.App
+﻿using CookieCookbook.Recipes.Ingredients;
+
+namespace CookieCookbook.App
 {
     public static class CookieCoursebookMessageHandler
     {
