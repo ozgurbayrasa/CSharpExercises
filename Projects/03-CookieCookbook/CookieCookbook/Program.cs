@@ -1,21 +1,25 @@
 ﻿
 using CookieCookbook.App;
 
-var cookieRecipesApp = new CookieRecipesApp();
+var cookieRecipesApp = new CookiesRecipesApp(
+    new RecipesRepository(),
+    new RecipesConsoleUserInteraction());
+
+
 cookieRecipesApp.Run();
 
-public class CookieRecipesApp
+public class CookiesRecipesApp
 {
 
-    private readonly RecipesRepository _recipesRepository;
-    private readonly RecipesUserInteraction _recipesUserInteraction;
+    private readonly IRecipesRepository _recipesRepository;
+    private readonly IRecipesUserInteraction _recipesConsoleUserInteraction;
 
-    public CookieRecipesApp(
-        RecipesRepository recipesRepository,
-        RecipesUserInteraction recipesUserInteraction)
+    public CookiesRecipesApp(
+        IRecipesRepository recipesRepository,
+        IRecipesUserInteraction recipesUserInteraction)
     {
         _recipesRepository = recipesRepository;
-        _recipesUserInteraction = recipesUserInteraction;
+        _recipesConsoleUserInteraction = recipesUserInteraction;
     }
 
     // Responsibility => Managing Workflow of this app.
@@ -23,11 +27,11 @@ public class CookieRecipesApp
     {
         // Reading all the recipes.
         var allRecipes = _recipesRepository.Read(filePath);
-        _recipesUserInteraction.PrintExistingRecipes(allRecipes);
+        _recipesConsoleUserInteraction.PrintExistingRecipes(allRecipes);
 
-        _recipesUserInteraction.PromptToCreateRecipe();
+        _recipesConsoleUserInteraction.PromptToCreateRecipe();
 
-        var ingredients = _recipesUserInteraction.ReadIngredientsFromUser();
+        var ingredients = _recipesConsoleUserInteraction.ReadIngredientsFromUser();
 
         if(ingredients.Count > 0)
         {
@@ -35,18 +39,47 @@ public class CookieRecipesApp
             allRecipes.Add(recipe);
             _recipesRepository.Write(filePath, allRecipes);
 
-            _recipesUserInteraction.ShowMessage("Recipe added: ");
-            _recipesUserInteraction.ShowMessage(recipe.ToString());
+            _recipesConsoleUserInteraction.ShowMessage("Recipe added: ");
+            _recipesConsoleUserInteraction.ShowMessage(recipe.ToString());
         }
         else
         {
-            _recipesUserInteraction.ShowMessage(
+            _recipesConsoleUserInteraction.ShowMessage(
                 "No ingredients have been selected. " +
                 "Recipe will not be saved.");
         }
 
-        _recipesUserInteraction.Exit();
+        _recipesConsoleUserInteraction.Exit();
 
     }
 }
 
+public interface IRecipesRepository
+{
+}
+
+// This class communicates with the user interface.
+public class RecipesConsoleUserInteraction : IRecipesUserInteraction
+{
+    public void Exit()
+    {
+        Console.WriteLine("Press any key to close.");
+        Console.ReadKey();
+    }
+
+    public void ShowMessage(string message)
+    {
+        Console.WriteLine(message);
+    }
+}
+
+public class RecipesRepository : IRecipesRepository
+{
+}
+
+public interface IRecipesUserInteraction
+{
+    void ShowMessage(string message);
+
+    void Exit();
+}
