@@ -126,7 +126,7 @@
 
         public CocoaPowder()
         {
-            Id = 7;
+            Id = 8;
             Name = "Cocoa Powder";
         }
 
