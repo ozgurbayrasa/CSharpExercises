@@ -105,28 +105,9 @@ public interface IStringsRepository
     void Write(string filePath, List<string> strings);
 }
 
-class StringsTextualRepository : IStringsRepository
-{
-    private static readonly string Seperator = Environment.NewLine;
 
-    public List<string> Read(string filePath)
-    {
-        if(File.Exists(filePath))
-        {
-            var fileContents = File.ReadAllText(filePath);
-            return fileContents.Split(Seperator).ToList();
-        }
-        return new List<string>();
-        
-    }
-
-    public void Write(string filePath, List<string> strings)
-    {
-        File.WriteAllText(filePath, string.Join(Seperator, strings));
-    }
-}
-
-class StringsJsonRepository : IStringsRepository
+// Template Methods Design Pattern
+abstract class StringsRepository : IStringsRepository
 {
 
     public List<string> Read(string filePath)
@@ -134,15 +115,47 @@ class StringsJsonRepository : IStringsRepository
         if (File.Exists(filePath))
         {
             var fileContents = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<List<string>>(fileContents);
+            return TextToStrings(fileContents);
         }
         return new List<string>();
 
     }
 
+    protected abstract List<string> TextToStrings(string fileContents);
+
     public void Write(string filePath, List<string> strings)
     {
-        File.WriteAllText(filePath, JsonSerializer.Serialize(strings));
+        File.WriteAllText(filePath, StringsToText(strings));
+    }
+
+    protected abstract string StringsToText(List<string> strings);
+}
+
+class StringsTextualRepository : StringsRepository
+{
+    private static readonly string Seperator = Environment.NewLine;
+
+    protected override string StringsToText(List<string> strings)
+    {
+        return string.Join(Seperator, strings);
+    }
+
+    protected override List<string> TextToStrings(string fileContents)
+    {
+        return fileContents.Split(Seperator).ToList();
+    }
+}
+
+class StringsJsonRepository : StringsRepository
+{
+    protected override string StringsToText(List<string> strings)
+    {
+        return JsonSerializer.Serialize(strings);
+    }
+
+    protected override List<string> TextToStrings(string fileContents)
+    {
+        return JsonSerializer.Deserialize<List<string>>(fileContents);
     }
 }
 
@@ -351,5 +364,5 @@ public interface IRecipesUserInteraction
     void PromptToCreateRecipe();
     IEnumerable<Ingredient> ReadIngredientsFromUser();
 }
-}
+
 
