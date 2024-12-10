@@ -3,20 +3,60 @@ using System.Text.Json;
 using CookieCookbook.Recipes;
 using CookieCookbook.Recipes.Ingredients;
 
+const FileFormat fileFormat = FileFormat.Json;
+
+IStringsRepository stringsRepository = fileFormat == FileFormat.Json ? 
+    new StringsJsonRepository() : 
+    new StringsTextualRepository();
+
+const string fileName = "recipes";
+
+var fileMetadata = new FileMetadata(fileName, fileFormat);
+
 var ingredientsRegister = new IngredientsRegister();
 
 var cookieRecipesApp = new CookiesRecipesApp(
-    new RecipesRepository(new StringsJsonRepository(), ingredientsRegister),
+    new RecipesRepository(stringsRepository, ingredientsRegister),
     new RecipesConsoleUserInteraction(ingredientsRegister));
 
 
-cookieRecipesApp.Run("recipes.json");
+cookieRecipesApp.Run(fileMetadata.ToPath());
 
+public class FileMetadata
+{
+    public string Name { get; }
+
+    public FileFormat Format { get; }
+
+
+    public FileMetadata(string name, FileFormat format)
+    {
+        Name = name;
+        Format = format;
+    }
+
+    public string ToPath() => $"{Name}.{Format.AsFileExtension()}";
+
+}
+
+public static class FileFormatExtensions
+{
+    public static string AsFileExtension(this FileFormat fileFormat) =>
+        fileFormat == FileFormat.Json ? "json" : "txt";
+}
+public enum FileFormat
+{
+    Json,
+    Txt
+}
 public class CookiesRecipesApp
 {
 
     private readonly IRecipesRepository _recipesRepository;
     private readonly IRecipesUserInteraction _recipesConsoleUserInteraction;
+
+
+    
 
     public CookiesRecipesApp(
         IRecipesRepository recipesRepository,
@@ -65,7 +105,7 @@ public interface IStringsRepository
     void Write(string filePath, List<string> strings);
 }
 
-class StringTextualRepository : IStringsRepository
+class StringsTextualRepository : IStringsRepository
 {
     private static readonly string Seperator = Environment.NewLine;
 
@@ -310,5 +350,6 @@ public interface IRecipesUserInteraction
     void PrintExistingRecipes(IEnumerable<Recipe> allRecipes);
     void PromptToCreateRecipe();
     IEnumerable<Ingredient> ReadIngredientsFromUser();
+}
 }
 
