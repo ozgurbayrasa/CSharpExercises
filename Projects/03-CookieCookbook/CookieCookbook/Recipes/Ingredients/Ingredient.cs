@@ -15,6 +15,11 @@
         // Only-getter property.
         public virtual string PreparationInstructions => "Add to other ingredients.";
 
+        public override string ToString()
+        {
+            return $"{Id}. {Name}";
+        }
+
     }
 
     // Sub-abstract classes.
