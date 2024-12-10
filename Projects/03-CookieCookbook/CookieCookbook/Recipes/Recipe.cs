@@ -1,63 +1,26 @@
-﻿using CookieCookbook.App;
-using CookieCookbook.Recipes.Ingredients;
+﻿using CookieCookbook.Recipes.Ingredients;
 
 namespace CookieCookbook.Recipes
 {
     // A Recipe class is simply a collection of ingredients.
     public class Recipe
     {
-        public readonly static List<Ingredient> RecipeIngredients = new List<Ingredient>();
+        public IEnumerable<Ingredient> Ingredients { get; }
 
-        public void addIngredientToRecipe(Ingredient ingredient)
+        public Recipe(IEnumerable<Ingredient> ingredients)
         {
-            RecipeIngredients.Add(ingredient);
+            Ingredients = ingredients;
         }
 
-        public static int[] GetRecipeIngredientsIDs()
+        public override string ToString()
         {
-            int[] recipeIngredientsIDs = new int[RecipeIngredients.Count];
+            var recipeTextLines = new List<string>();
 
-            foreach (Ingredient ingredient in RecipeIngredients)
+            foreach(var ingredient in Ingredients)
             {
-                int ingredientID = ingredient.Id;
-                int ingredientIndex = RecipeIngredients.IndexOf(ingredient);
-                recipeIngredientsIDs[ingredientIndex] = ingredientID;
+                recipeTextLines.Add($"{ingredient.Name}. {ingredient.PreparationInstructions}");
             }
-
-            return recipeIngredientsIDs;
-        }
-
-        public void addIngredientToRecipe(int selectedIngredentID)
-        {
-
-            switch (selectedIngredentID)
-            {
-                case 1:
-                    RecipeIngredients.Add(new WheatFlour());
-                    break;
-                case 2:
-                    RecipeIngredients.Add(new CoconutFlour());
-                    break;
-                case 3:
-                    RecipeIngredients.Add(new Butter());
-                    break;
-                case 4:
-                    RecipeIngredients.Add(new Chocolate());
-                    break;
-                case 5:
-                    RecipeIngredients.Add(new Sugar());
-                    break;
-                case 6:
-                    RecipeIngredients.Add(new Cardamom());
-                    break;
-                case 7:
-                    RecipeIngredients.Add(new Cinnamon());
-                    break;
-                case 8:
-                    RecipeIngredients.Add(new CocoaPowder());
-                    break;
-
-            }
+            return string.Join(Environment.NewLine, recipeTextLines);
         }
     }
 }
