@@ -2,6 +2,7 @@
 
 namespace CookieCookbook.Recipes
 {
+
     // A Recipe class is simply a collection of ingredients.
     public class Recipe
     {
