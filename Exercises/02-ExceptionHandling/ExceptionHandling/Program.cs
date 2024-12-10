@@ -64,6 +64,37 @@ int GetFirstElement(IEnumerable<int> numbers)
     throw new InvalidOperationException("The collection can't be empty.");
 }
 
+bool IsFirstElementPositive(IEnumerable<int> numbers)
+{
+    try
+    {
+        // We know that it may throw InvalidOperationException
+        var firstElement = GetFirstElement(numbers);
+        return firstElement > 0;
+    }
+    catch (InvalidOperationException ex)
+    {
+        // Suppose it is said that, if an empty list is given,
+        // return true.
+        // So it's handled.
+        Console.WriteLine("The collection is empty!");
+        return true;
+    }
+    catch(NullReferenceException ex)
+    {
+        // Exception rehrowing
+        Console.WriteLine("Sorry! The application experienced " +
+            "an unexpected error.");
+        throw;
+
+        // Still not handled.
+        // But it is good to throw it so let the developer know,
+        // that they make a mistake in their code.
+        throw new ArgumentNullException("The collection is null: ", ex);
+    }
+    
+}
+
 class Person
 {
     public string Name { get; }
