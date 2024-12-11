@@ -59,6 +59,9 @@ catch (HttpRequestException ex) when (ex.Message.StartsWith("4"))
     Console.WriteLine("Some client error");
 }
 
+
+bool isContain = CheckIfContains(0, new int[4]);
+
 //-------------------------------------
 throw new CustomException();
 
@@ -160,7 +163,7 @@ public class CustomException : Exception
     public CustomException(string message, Exception innerException) :
         base(message, innerException) 
     {
-
+        
     }
 
     public CustomException(string message,
