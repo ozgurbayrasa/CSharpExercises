@@ -35,9 +35,30 @@ int ParseStringToInt(string input)
 
 // ------------------------------------------------
 
-bool has7 = CheckIfContains(7, new int[1]);
+
+try
+{
+    var dataFromWeb = SendHTTPRequest("www.someAdress.com/get/...");
+
+}
+catch(HttpRequestException ex) when (ex.Message == "403")
+{
+    Console.WriteLine("Forbidden to access.");
+}
+catch (HttpRequestException ex) when (ex.Message == "404")
+{
+    Console.WriteLine("Resource was not found.");
+}
+catch (HttpRequestException ex) when (ex.Message.StartsWith("4"))
+{
+    Console.WriteLine("Some client error");
+}
 
 
+object SendHTTPRequest(string v)
+{
+    throw new NotImplementedException();
+}
 
 Console.ReadLine();
 
