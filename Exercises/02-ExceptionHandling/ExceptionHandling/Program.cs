@@ -1,4 +1,6 @@
 ﻿
+using System.Runtime.Serialization;
+
 Console.WriteLine("Enter a number: ");
 
 string input = Console.ReadLine();
@@ -34,14 +36,17 @@ int ParseStringToInt(string input)
 }
 
 // ------------------------------------------------
-
+object SendHTTPRequest(string v)
+{
+    throw new NotImplementedException();
+}
 
 try
 {
     var dataFromWeb = SendHTTPRequest("www.someAdress.com/get/...");
 
 }
-catch(HttpRequestException ex) when (ex.Message == "403")
+catch (HttpRequestException ex) when (ex.Message == "403")
 {
     Console.WriteLine("Forbidden to access.");
 }
@@ -54,13 +59,18 @@ catch (HttpRequestException ex) when (ex.Message.StartsWith("4"))
     Console.WriteLine("Some client error");
 }
 
-
-object SendHTTPRequest(string v)
-{
-    throw new NotImplementedException();
-}
+//-------------------------------------
+throw new CustomException();
 
 Console.ReadLine();
+
+
+
+
+
+
+
+
 
 bool CheckIfContains(int v, object numbers)
 {
@@ -116,6 +126,50 @@ bool IsFirstElementPositive(IEnumerable<int> numbers)
     
 }
 
+// Custom exception must be deriven from Exception class.
+// It should end with Exception name, also have all of three constructors
+// of Exception class.
+
+// If have additional properts like 'StatusCode' you should define them
+// along with base classes' constructors.
+
+[Serializable]
+public class CustomException : Exception
+{
+    public int StatusCode { get; }
+
+    protected CustomException(
+        SerializationInfo info,
+        StreamingContext context ) : base(info, context) { }
+    public CustomException()
+    {
+
+    }
+
+    public CustomException(string message) : base(message) 
+    {
+
+    }
+
+    public CustomException(string message,
+        int statusCode) : base(message)
+    {
+        StatusCode = statusCode;
+    }
+
+    public CustomException(string message, Exception innerException) :
+        base(message, innerException) 
+    {
+
+    }
+
+    public CustomException(string message,
+        Exception innerException,
+        int statusCode) : base(message, innerException)
+    {
+        StatusCode = statusCode;
+    }
+}
 class Person
 {
     public string Name { get; }
