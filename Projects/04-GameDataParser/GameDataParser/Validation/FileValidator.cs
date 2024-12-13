@@ -9,7 +9,7 @@
 
             if (fileName == string.Empty) throw new InvalidOperationException("File name cannot be empty! ");
 
-            if (!File.Exists($"{fileName}.json")) throw new FileNotFoundException("File not found! ");
+            if (!File.Exists(fileName)) throw new FileNotFoundException("File not found! ");
         
             return true;
         }

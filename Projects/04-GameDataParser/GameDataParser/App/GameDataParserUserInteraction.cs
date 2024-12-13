@@ -22,6 +22,7 @@ namespace GameDataParser.App
             {
                 Console.WriteLine("Enter the name of the file you want to read: ");
                 userInputFileName = Console.ReadLine();
+
                 try
                 {
                     isValidFileName = _fileValiadtor.Validate(userInputFileName);
