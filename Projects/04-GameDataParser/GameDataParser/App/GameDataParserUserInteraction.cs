@@ -1,5 +1,6 @@
 ﻿
 
+using GameDataParser.Games;
 using GameDataParser.Validation;
 
 namespace GameDataParser.App
@@ -11,6 +12,25 @@ namespace GameDataParser.App
         public GameDataParserUserInteraction(IFileValiadtor fileValiadtor)
         {
             _fileValiadtor = fileValiadtor;
+        }
+
+        public void Exit()
+        {
+            Console.WriteLine("Press any key to exit.");
+            Console.ReadKey();
+        }
+
+        public void PrintGames(List<Game> allGames)
+        {
+            if (allGames.Count == 0)
+            {
+                Console.WriteLine("No games are present in the input file.");
+            }
+
+            foreach (Game game in allGames)
+            {
+                Console.WriteLine(game);
+            }
         }
 
         public string PromptUserToGetFileName()

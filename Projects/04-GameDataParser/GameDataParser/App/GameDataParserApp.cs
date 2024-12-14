@@ -30,12 +30,17 @@ namespace GameDataParser.App
                 var allGames = _gamesRepository.Read(fileName);
 
                 // Print all the games for the user.
-                //_gameDataParserUserInteraction.PrintGames(allGames);
+                _gameDataParserUserInteraction.PrintGames(allGames);
+
+                // Exit the app.
+                _gameDataParserUserInteraction.Exit();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Sorry! The application has experienced an " +
                     "unexpected error and will have to be closed.");
+
+                _gameDataParserUserInteraction.Exit();
                 Console.ReadKey();
             }
 

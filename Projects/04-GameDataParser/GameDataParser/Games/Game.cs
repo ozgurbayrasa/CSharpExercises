@@ -9,9 +9,7 @@
         public override string ToString()
         {
             return $"""
-                Title: {Title}
-                ReleaseYear: {ReleaseYear}
-                Rating: {Rating}
+                {Title}, released in {ReleaseYear}, rating: {Rating}
                 """;
         }
     }
