@@ -14,14 +14,24 @@ namespace GameDataParser.DataAccess
             }
             catch (JsonException ex)
             {
+                
                 Console.WriteLine($"JSON in the {filePath} was not in a valid format. JSON body: ");
-
+                // Remember original color before changing it to red for one message.
+                var originalColor = Console.ForegroundColor;
                 // Print invalid JSON body in red.
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(fileContents);
-                Console.ResetColor();
+                // Set the foreground color to old one.
+                Console.ForegroundColor = originalColor;
+                
+                // Throwing same exception again, file name is also included.
+                // So it can be investigated better. 
 
-                throw;
+                // We can't simply set exception message since it's readonly
+                // So we rethrow same exception again with more detailed message.
+
+                // Also set inner exception as thrown exception before.
+                throw new JsonException($"{ex.Message} The file is: {filePath}", ex);
             }
         }
     }
