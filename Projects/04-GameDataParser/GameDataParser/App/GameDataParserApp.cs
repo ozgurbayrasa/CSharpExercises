@@ -24,25 +24,15 @@ namespace GameDataParser.App
             // Get a valid filename from the user.
             string fileName = _gameDataParserUserInteraction.PromptUserToGetFileName();
 
-            try
-            {
-                // Read the file, Games will be returned.
-                var allGames = _gamesRepository.Read(fileName);
+            // Read the file, Games will be returned.
+            var allGames = _gamesRepository.Read(fileName);
 
-                // Print all the games for the user.
-                _gameDataParserUserInteraction.PrintGames(allGames);
+            // Print all the games for the user.
+            _gameDataParserUserInteraction.PrintGames(allGames);
 
-                // Exit the app.
-                _gameDataParserUserInteraction.Exit();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Sorry! The application has experienced an " +
-                    "unexpected error and will have to be closed.");
-
-                _gameDataParserUserInteraction.Exit();
-                Console.ReadKey();
-            }
+            // Exit the app.
+            _gameDataParserUserInteraction.Exit();
+            
 
         }
     }
