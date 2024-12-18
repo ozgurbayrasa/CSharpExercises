@@ -1,34 +1,41 @@
 ﻿
+// Collection of integers
+var numbers = new SimpleList<int>();
+numbers.Add(1);
+numbers.Add(2);
+numbers.Add(3);
+numbers.Add(4);
 
-var numbers = new ListOfInts();
-numbers.Add(10);
-numbers.Add(20);
-numbers.Add(30);
-numbers.Add(40);
-numbers.Add(50);
+// Collection of strings
+var words = new SimpleList<string>();
+words.Add("aaa");
+words.Add("bbb");
+words.Add("ccc");
 
-numbers.RemoveAt(2);
-
+// Collection of DateTimes
+var dates = new SimpleList<DateTime>();
+dates.Add(new DateTime(2025, 1, 6));
+dates.Add(new DateTime(2025, 1, 3));
 
 Console.ReadKey();
 
-// Implementation of int array.
-class ListOfInts
+// Implementation of generic type list.
+class SimpleList<T>
 {
     // Initial size is 4. (For example)
     // In real list it is 0.
-    private int[] _items = new int[4];
+    private T[] _items = new T[4];
     // Size is 0 by default.
     private int _size = 0;
 
     // Adds an integer to the integer list.
-    public void Add(int item)
+    public void Add(T item)
     { 
         // If there is no room for new item, double the size
         // of the list.
         if(_size >= _items.Length)
         {
-            var newItems = new int[_items.Length * 2];
+            var newItems = new T[_items.Length * 2];
 
             for(int i = 0; i < _items.Length; i++)
             {
@@ -61,13 +68,15 @@ class ListOfInts
             _items[i] = _items[i + 1];
         }
 
-        // Last element is doubled (10,20,30,40,50) -> (10,20,40,50,50)
-        // Just set it to 0 for simplicity. -> (10,20,40,50,0)
-        _items[_size] = 0;
+        // Last element is duplicated at the end.
+        // Just set it to default for simplicity.
+        // Since it is known that its type is T,
+        // we can just write defualt instead of default(T).
+        _items[_size] = default;
     }
 
     // Indexer method
-    public int GetAtIndex(int index)
+    public T GetAtIndex(int index)
     {
         // Check if it is in the bound.
         if (index < 0 || index >= _size)
