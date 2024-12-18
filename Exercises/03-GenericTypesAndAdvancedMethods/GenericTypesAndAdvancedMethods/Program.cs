@@ -65,5 +65,17 @@ class ListOfInts
         // Just set it to 0 for simplicity. -> (10,20,40,50,0)
         _items[_size] = 0;
     }
+
+    // Indexer method
+    public int GetAtIndex(int index)
+    {
+        // Check if it is in the bound.
+        if (index < 0 || index >= _size)
+        {
+            throw new IndexOutOfRangeException($"Index {index} is outside the bounds of the list.");
+        }
+
+        return _items[index];
+    }
 }
 
