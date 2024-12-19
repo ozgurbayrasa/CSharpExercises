@@ -65,7 +65,32 @@ ArrayList strings = new ArrayList { "a", "b", "c"};
 ArrayList variousItems = new ArrayList { false, "a", new DateTime()};
 
 
+// GENERIC METHODS
+
+var intsList = new List<int> { 1,2,3};
+// No need to write as AddToFront<int>
+// C# compiler infers that the type T is an int.
+intsList.AddToFront(10);
+
+// C# compiler can't infer the type, it is 'int' list.
+// but we try to add 'string' item.
+//intsList.AddToFront("abc");
+
 Console.ReadKey();
+
+// Extension class for AddToFront method
+// They must be static.
+static class ListExtensions
+{
+    // <T> -> Means that this method is generic.
+    // Otherwise compiler can't understand if T is about generic types
+    // or it is a class name.
+    public static void AddToFront<T>(this List<T> list, T item)
+    {
+        // Add the item to the beginning.
+        list.Insert(0, item);
+    }
+}
 
 
 
