@@ -153,6 +153,24 @@ Console.WriteLine("Is any even? " + IsAny(numbersArray, n => n % 2 == 0));
 
 Action<int, DateTime, string, bool> someFunc;
 
+// DELEGATES
+
+ProcessString processString1 = TrimTo5Letters;
+ProcessString processString2 = ToUpper;
+
+Console.WriteLine(processString1("Helloooooooo"));
+Console.WriteLine(processString2("Helloooooooo"));
+
+Print print1 = text => Console.WriteLine(text.ToUpper());
+Print print2 = text => Console.WriteLine(text.ToLower());
+Print multicast = print1 + print2;
+
+// Both functions will be executed.
+// CROCODILE
+// crocodile
+multicast("Crocodile");
+
+
 Console.ReadKey();
 
 
@@ -234,6 +252,19 @@ IEnumerable<TPerson> GetOnlyValid<TPerson>(IEnumerable<TPerson> persons)
     return result;
 }
 
+string TrimTo5Letters(string input)
+{
+    return input.Substring(0, 5);
+}
+
+string ToUpper(string input)
+{
+    return input.ToUpper();
+}
+
+delegate string ProcessString(string input);
+
+delegate void Print(string input);
 public static class Calculator
 {
     public static T Square<T>(T input) where T : INumber<T> => input * input;
