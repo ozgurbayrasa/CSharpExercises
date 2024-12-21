@@ -97,6 +97,39 @@ var datetimes = CreateCollectionOfRandomLength<DateTime>(5);
 stopwatch.Stop();
 Console.WriteLine($"Execution took {stopwatch.ElapsedMilliseconds} ms");
 
+// TYPE CONSTRAINTS -> DERIVED
+
+// People list.
+var people = new List<Person>
+{
+    new Person {Name = "John", YearOfBirth = 1980},
+    new Person {Name = "John", YearOfBirth = 1980},
+    new Person {Name = "John", YearOfBirth = 1980},
+};
+
+// Employees list.
+var employees = new List<Employee>
+{
+    new Employee {Name = "John", YearOfBirth = 1980},
+    new Employee {Name = "John", YearOfBirth = 1980},
+    new Employee {Name = "John", YearOfBirth = 1980},
+};
+
+var validPeople = GetOnlyValid(people);
+var validEmployees = GetOnlyValid(employees);
+
+foreach (var employee in validEmployees)
+{
+    // This collection taken from method that returns 'Person' list.
+    // We must downcast it to its child class to call this method.
+    // Because it is defined on its child class.
+
+    // After generic types, this code compiles without issue since 
+    // 'Employee' list is returned. It is accepted by method because
+    // it employee type is derived from person type.
+    employee.GoToWork();
+}
+
 Console.ReadKey();
 
 // Type constaint -> where T: new() -> Means that T Type must have parameterless constructor.
@@ -105,7 +138,8 @@ IEnumerable<T> CreateCollectionOfRandomLength<T>(int maxLength) where T : new()
 
     var length = new Random().Next(maxLength + 1);
 
-    var result = new List<T>();
+    // Create list with length for performance improvement.
+    var result = new List<T>(length);
 
     for (int i = 0; i < length; i++)
     {
@@ -115,6 +149,25 @@ IEnumerable<T> CreateCollectionOfRandomLength<T>(int maxLength) where T : new()
         result.Add(new T());
     }
     
+    return result;
+}
+
+// Method that returns only valid persons list from given persons list.
+// Type constraint -> Generic Type must derived from Person class or
+//                    it must be Person class itself.
+IEnumerable<TPerson> GetOnlyValid<TPerson>(IEnumerable<TPerson> persons) 
+    where TPerson : Person
+{
+    var result = new List<TPerson>();
+
+    foreach(var person in  persons)
+    {
+        if(person.YearOfBirth > 1900 && person.YearOfBirth < DateTime.Now.Year)
+        {
+            result.Add(person);
+        }
+    }
+
     return result;
 }
 
@@ -227,4 +280,17 @@ public class SimpleTuple<T1, T2>
         Item2 = int2;
     }
 }
+
+public class Person
+{
+    public string Name { get; init; }
+    public int YearOfBirth { get; init; }
+
+}
+
+public class Employee : Person
+{
+    public void GoToWork() => Console.WriteLine("Going to work");
+}
+
 
