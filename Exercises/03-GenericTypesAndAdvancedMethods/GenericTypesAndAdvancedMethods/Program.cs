@@ -1,5 +1,6 @@
 ﻿// Collection of integers
 using System.Collections;
+using System.Diagnostics;
 
 var numbers = new SimpleList<int>();
 numbers.Add(1);
@@ -88,14 +89,20 @@ var decimalsFromDates = datesList.ConvertTo<DateTime, decimal>();
 
 // TYPE CONSTRAINTS
 
+Stopwatch stopwatch = Stopwatch.StartNew();
+
 // <DateTime> -> Has parameterless constructor so no problem.
 var datetimes = CreateCollectionOfRandomLength<DateTime>(5);
+
+stopwatch.Stop();
+Console.WriteLine($"Execution took {stopwatch.ElapsedMilliseconds} ms");
 
 Console.ReadKey();
 
 // Type constaint -> where T: new() -> Means that T Type must have parameterless constructor.
 IEnumerable<T> CreateCollectionOfRandomLength<T>(int maxLength) where T : new()
 {
+
     var length = new Random().Next(maxLength + 1);
 
     var result = new List<T>();
