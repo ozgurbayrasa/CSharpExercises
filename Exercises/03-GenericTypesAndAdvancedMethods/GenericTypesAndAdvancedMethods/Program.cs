@@ -86,7 +86,30 @@ var datesList = new List<DateTime> { new DateTime(2023, 5, 1) };
 // InvalidCastException will be thrown.
 var decimalsFromDates = datesList.ConvertTo<DateTime, decimal>();
 
+// TYPE CONSTRAINTS
+
+// <DateTime> -> Has parameterless constructor so no problem.
+var datetimes = CreateCollectionOfRandomLength<DateTime>(5);
+
 Console.ReadKey();
+
+// Type constaint -> where T: new() -> Means that T Type must have parameterless constructor.
+IEnumerable<T> CreateCollectionOfRandomLength<T>(int maxLength) where T : new()
+{
+    var length = new Random().Next(maxLength + 1);
+
+    var result = new List<T>();
+
+    for (int i = 0; i < length; i++)
+    {
+        // This line is problem here.
+        // We can't know if T type has parameterless constructor.
+        // Or have constructor with parameters.
+        result.Add(new T());
+    }
+    
+    return result;
+}
 
 // Extension class for AddToFront method
 // They must be static.
