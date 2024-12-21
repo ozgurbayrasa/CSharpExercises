@@ -281,11 +281,23 @@ public class SimpleTuple<T1, T2>
     }
 }
 
-public class Person
+public class Person : IComparable<Person>
 {
     public string Name { get; init; }
     public int YearOfBirth { get; init; }
 
+    // Sorting from younger people to older ones.
+    public int CompareTo(Person other)
+    {
+        // Only sign matters but -1, 1 is mostly used convention.
+
+        // If this person older, put this person to the right. 
+        if (YearOfBirth < other.YearOfBirth) return 1;
+        // If this person is younger, put this person to the left.
+        else if (YearOfBirth > other.YearOfBirth) return -1;
+        // Return 0 if they're equal.
+        return 0;
+    }
 }
 
 public class Employee : Person
