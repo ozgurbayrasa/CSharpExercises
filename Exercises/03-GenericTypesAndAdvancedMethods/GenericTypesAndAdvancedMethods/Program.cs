@@ -67,7 +67,7 @@ ArrayList variousItems = new ArrayList { false, "a", new DateTime()};
 
 // GENERIC METHODS
 
-var intsList = new List<int> { 1,2,3};
+var intsList = new List<int> {1,2,3};
 // No need to write as AddToFront<int>
 // C# compiler infers that the type T is an int.
 intsList.AddToFront(10);
@@ -75,6 +75,16 @@ intsList.AddToFront(10);
 // C# compiler can't infer the type, it is 'int' list.
 // but we try to add 'string' item.
 //intsList.AddToFront("abc");
+
+var decimals = new List<decimal> {1.1m, 2.2m, 3.3m};
+
+// All of the types must explicitly declared if there is more than
+// one generic type, in this case C# complier cannot infer the type.
+var intsListFromDecimals = decimals.ConvertTo<decimal, int>();
+
+var datesList = new List<DateTime> { new DateTime(2023, 5, 1) };
+// InvalidCastException will be thrown.
+var decimalsFromDates = datesList.ConvertTo<DateTime, decimal>();
 
 Console.ReadKey();
 
@@ -89,6 +99,19 @@ static class ListExtensions
     {
         // Add the item to the beginning.
         list.Insert(0, item);
+    }
+
+    public static List<TTarget> ConvertTo<TSource, TTarget>(this List<TSource> decimalList)
+    {
+        var targetList = new List<TTarget>();
+
+        foreach (var sourceItem in decimalList)
+        {
+            TTarget targetTypeItem = (TTarget) Convert.ChangeType(sourceItem, typeof(TTarget));
+            targetList.Add(targetTypeItem);
+        }
+
+        return targetList;
     }
 }
 
