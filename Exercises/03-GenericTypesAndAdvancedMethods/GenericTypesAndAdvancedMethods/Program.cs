@@ -1,6 +1,7 @@
 ﻿// Collection of integers
 using System.Collections;
 using System.Diagnostics;
+using System.Numerics;
 
 var numbers = new SimpleList<int>();
 numbers.Add(1);
@@ -132,10 +133,21 @@ foreach (var employee in validEmployees)
 
 // TYPE CONSTRAINT -> Implements an interface.
 
+PrintInOrder(10, 5);
+
+// TYPE CONSTRAINT -> Numeric
+
+Console.WriteLine(Calculator.Square(2));
+Console.WriteLine(Calculator.Square(4m));
+Console.WriteLine(Calculator.Square(6d));
+
+
 
 Console.ReadKey();
 
-void PrintInOrder<T>(T first, T second) where T : IComparable<T>
+
+
+void PrintInOrder<T>(T first, T second) where T : IComparable<T>, new()
 {
     if (first.CompareTo(second) > 0)
     {
@@ -184,6 +196,11 @@ IEnumerable<TPerson> GetOnlyValid<TPerson>(IEnumerable<TPerson> persons)
     }
 
     return result;
+}
+
+public static class Calculator
+{
+    public static T Square<T>(T input) where T : INumber<T> => input * input;
 }
 
 // Extension class for AddToFront method
@@ -284,7 +301,9 @@ class SimpleList<T>
     }
 }
 
-public class SimpleTuple<T1, T2>
+public class SimpleTuple<T1, T2> 
+    where T1 : new() 
+    where T2 : IEnumerable<T2>
 {
     public T1 Item1 { get; }
     public T2 Item2 { get; }
