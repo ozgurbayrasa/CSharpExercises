@@ -130,7 +130,22 @@ foreach (var employee in validEmployees)
     employee.GoToWork();
 }
 
+// TYPE CONSTRAINT -> Implements an interface.
+
+
 Console.ReadKey();
+
+void PrintInOrder<T>(T first, T second) where T : IComparable<T>
+{
+    if (first.CompareTo(second) > 0)
+    {
+        Console.WriteLine($"{second} {first}");
+    }
+    else if (first.CompareTo(second) < 0)
+    {
+        Console.WriteLine($"{first} {second}");
+    }
+}
 
 // Type constaint -> where T: new() -> Means that T Type must have parameterless constructor.
 IEnumerable<T> CreateCollectionOfRandomLength<T>(int maxLength) where T : new()
