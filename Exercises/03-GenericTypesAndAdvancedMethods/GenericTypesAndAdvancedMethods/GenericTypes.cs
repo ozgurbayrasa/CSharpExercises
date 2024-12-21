@@ -171,6 +171,52 @@ Print multicast = print1 + print2;
 multicast("Crocodile");
 
 
+// DICTIONARIES ------------------------------------------
+
+var countryToCurrencyMapping = new Dictionary<string, string>();
+// Adding key-value pairs
+countryToCurrencyMapping.Add("USA", "USD");
+countryToCurrencyMapping.Add("Türkiye", "TRY");
+countryToCurrencyMapping.Add("Spain", "EUR");
+// Following operation raises an exception.
+// countryToCurrencyMapping.Add("Spain", "SPN");
+
+// Accessing with indexer.
+Console.WriteLine("Currency in Turkey is " + 
+    countryToCurrencyMapping["Türkiye"]);
+
+// Add key-value without calling a method.
+countryToCurrencyMapping["India"] = "INR";
+
+// Overriding value of a key
+countryToCurrencyMapping["India"] = "HEY";
+
+// Collecion initializer for dictionaries.
+var countryCapitalMapping = new Dictionary<string, string>
+{
+    ["Spain"] = "Madrid",
+    ["Italy"] = "Milano",
+};
+// Old syntax
+var countryCapitalMappingOldSyntax = new Dictionary<string, string>
+{
+    { "Spain", "Madrid" },
+    { "Italy" , "Milano"},
+};
+
+// Always check if a key exists in a dictionary.
+if (countryToCurrencyMapping.ContainsKey("Poland"))
+{
+    Console.WriteLine("Poland: " + countryToCurrencyMapping["Poland"]);
+}
+
+// Loop through key and values.
+foreach (var countryCapitalPair in countryCapitalMapping)
+{
+    Console.WriteLine($"Country: {countryCapitalPair.Key}," +
+                      $"Capital: {countryCapitalPair.Value}");
+}
+
 Console.ReadKey();
 
 
