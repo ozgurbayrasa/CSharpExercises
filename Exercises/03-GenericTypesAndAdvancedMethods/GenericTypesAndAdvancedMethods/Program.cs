@@ -147,8 +147,9 @@ Console.WriteLine(Calculator.Square(6d));
 var numbersArray = new[] { 1, 4, 7, 19, 2 };
 
 // Methods are passed as parameters.
-Console.WriteLine("Is any larger than 10? " + IsAny(numbersArray, IsLargerThan10));
-Console.WriteLine("Is any even? " + IsAny(numbersArray, IsEven));
+// Lambda expressions parameter => expression
+Console.WriteLine("Is any larger than 10? " + IsAny(numbersArray, n => n % 2 > 10));
+Console.WriteLine("Is any even? " + IsAny(numbersArray, n => n % 2 == 0));
 
 Action<int, DateTime, string, bool> someFunc;
 
