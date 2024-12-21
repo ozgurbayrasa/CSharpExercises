@@ -141,9 +141,44 @@ Console.WriteLine(Calculator.Square(2));
 Console.WriteLine(Calculator.Square(4m));
 Console.WriteLine(Calculator.Square(6d));
 
+// ADVANCED USE OF METHODS ---------------------------------------
 
+// Variables holding functions.
+var numbersArray = new[] { 1, 4, 7, 19, 2 };
+
+// Methods are passed as parameters.
+Console.WriteLine("Is any larger than 10? " + IsAny(numbersArray, IsLargerThan10));
+Console.WriteLine("Is any even? " + IsAny(numbersArray, IsEven));
+
+Action<int, DateTime, string, bool> someFunc;
 
 Console.ReadKey();
+
+
+bool IsAny(
+    IEnumerable<int> inputArray, 
+    Func<int, bool> predicate)
+{
+    foreach (var input in inputArray)
+    {
+        // Only this part is different.
+        if (predicate(input))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool IsLargerThan10(int number)
+{
+    return number > 10;
+}
+
+bool IsEven(int number)
+{
+    return number % 2 == 0;
+}
 
 
 
@@ -302,8 +337,6 @@ class SimpleList<T>
 }
 
 public class SimpleTuple<T1, T2> 
-    where T1 : new() 
-    where T2 : IEnumerable<T2>
 {
     public T1 Item1 { get; }
     public T2 Item2 { get; }
