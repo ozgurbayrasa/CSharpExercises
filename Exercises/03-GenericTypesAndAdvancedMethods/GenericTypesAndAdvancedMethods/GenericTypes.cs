@@ -217,8 +217,42 @@ foreach (var countryCapitalPair in countryCapitalMapping)
                       $"Capital: {countryCapitalPair.Value}");
 }
 
+// STRATEGY DESIGN PATTERN --------------------------------------------
+
+var numbersCollection = new List<int> { 10, 12, 11, 15, 28 };
+
+var filteringStrategiesNames = new FilteringStrategySelector().FilteringStrategiesNames;
+
+Console.WriteLine("Select filter: ");
+Console.WriteLine(string.Join(
+    Environment.NewLine, 
+    filteringStrategiesNames));
+
+var filteringType = Console.ReadLine();
+
+// Get filtering strategy according to user input.
+// Simply get lambda expression for user input.
+var filteringStrategy = new FilteringStrategySelector().Select(filteringType);
+
+// Filter given list with lambda expression you get.
+var result = new Filter().FilterBy(filteringStrategy, numbersCollection);
+
+// See that generic types are also worked
+var wordsArray = new string[] { "aloha", "baloon", "hey" };
+
+var bwords = new Filter().FilterBy(
+    word => word.StartsWith("b"),
+    wordsArray);
+ 
+
+
+
 Console.ReadKey();
 
+void PrintList(IEnumerable<int> numbers)
+{
+    Console.WriteLine(string.Join(", ", numbers));
+}
 
 bool IsAny(
     IEnumerable<int> inputArray, 
@@ -311,6 +345,47 @@ string ToUpper(string input)
 delegate string ProcessString(string input);
 
 delegate void Print(string input);
+
+
+public class FilteringStrategySelector
+{
+    private readonly Dictionary<string, Func<int, bool>> _filteringStrategies =
+        new Dictionary<string, Func<int, bool>>
+        {
+            ["Even"] = n => n % 2 == 0,
+            ["Odd"] = n => n % 2 == 1
+        };
+
+    // Exposing keys
+    public IEnumerable<string> FilteringStrategiesNames => _filteringStrategies.Keys;
+    public Func<int, bool> Select(string filteringType)
+    {
+        if(!_filteringStrategies.ContainsKey(filteringType))
+        {
+            throw new NotSupportedException($"{filteringType} is not valid filter.");
+        }
+        return _filteringStrategies[filteringType];
+    }
+
+
+}
+public class Filter
+{
+    public IEnumerable<T> FilterBy<T>(Func<T, bool> predicate, IEnumerable<T> items)
+    {
+        List<T> result = new List<T>();
+
+        foreach (var item in items)
+        {
+            if (predicate(item))
+            {
+                result.Add(item);
+            }
+        }
+        return result;
+    }
+}
+
 public static class Calculator
 {
     public static T Square<T>(T input) where T : INumber<T> => input * input;
