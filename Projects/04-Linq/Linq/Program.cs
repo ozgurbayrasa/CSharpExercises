@@ -1,10 +1,10 @@
 ﻿// Linq on string list.
-var words = new List<string> { "aa", "b", "ccc"};
+var words = new List<string> { "aa", "b", "ccc" };
 var wordsLongerThan2Letters = words.Where((word) => word.Length > 2);
 
 // Linq on integers array.
 var numbers = new int[] { 1, 2, 3, 4, 5, 6, 7 };
-var oddNumbers = numbers.Where(number => number %  2 == 1);
+var oddNumbers = numbers.Where(number => number % 2 == 1);
 
 // Original IEnumerable is not modified.
 var numbersAppend = numbers.Append(8);
@@ -28,7 +28,7 @@ foreach (var word in shortWords)
     Console.WriteLine(word);
 }
 
-words.Add("e"); 
+words.Add("e");
 
 foreach (var word in shortWords)
 {
@@ -91,7 +91,7 @@ var petsOrderedByAgeThenNames = petsList.OrderBy(pet => pet.Age).ThenBy(pet => p
 
 // First and Last
 // Last dog older than 5
-var lastDogOlderThan5 = petsList.Last(pet => pet.Age > 5); 
+var lastDogOlderThan5 = petsList.Last(pet => pet.Age > 5);
 
 // No exception, if condition is not satisfied for an element.
 var lastDogOlderThan5Default = petsList.LastOrDefault(pet => pet.Age > 5);
@@ -114,6 +114,32 @@ var uniqueNumbers = numbers.Distinct();
 var doubleNumbers = numbers.Select(number => number * 2);
 
 var numbersAsStrings = numbers.Select(number => number.ToString());
+
+// List of integer lists.
+List<List<int>> listOfIntegerList = new List<List<int>>
+{
+    new List<int> { 95, 87, 78, 92, 88, 81, 99 },
+    new List<int> { 45, 37, 42, 39, 48 },
+    new List<int> { 12, 8, 15, 5, 18, 10 }
+};
+
+var result = listOfIntegerList
+    .Select(listOfIntegers => new // Anonymous Type Declaration
+    {
+        Count = listOfIntegers.Count(),
+        Average = listOfIntegers.Average(),
+    })
+    .OrderByDescending(countAndAverage =>
+        countAndAverage.Average)
+    .Select(countAndAverage =>
+        $"Count is: {countAndAverage.Count}, " +
+        $"Average is: {countAndAverage.Average}");
+
+Console.WriteLine(result);
+
+var person = new { Name = "Jack", Age = 25 };
+Console.WriteLine(person.Name);
+person.Name = "John";
 
 Console.ReadKey();
 
