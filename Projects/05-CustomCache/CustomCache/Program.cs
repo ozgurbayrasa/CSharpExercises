@@ -20,7 +20,7 @@ public interface IDataDownloader
 
 public class SlowDataDownloader : IDataDownloader
 {
-    public string DownloadData(string resourceId) 
+    public string DownloadData(string resourceId)
     {
         //let's imagine this method downloads real data,
         //and it does it slowly
@@ -29,7 +29,7 @@ public class SlowDataDownloader : IDataDownloader
     }
 }
 
-public class Cache<TKey, TData>  
+public class Cache<TKey, TData>
 {
     public TKey Key;
     public TData Value;
@@ -54,7 +54,7 @@ public class Cache<TKey, TData>
 public class CachingDataDownloder : IDataDownloader
 {
     private readonly IDataDownloader _dataDownloader;
-    private readonly Cache<string, string>_cache = new();
+    private readonly Cache<string, string> _cache = new();
 
     public CachingDataDownloder(IDataDownloader dataDownloader)
     {
