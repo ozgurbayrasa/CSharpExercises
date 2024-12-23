@@ -139,7 +139,7 @@ Console.WriteLine(result);
 
 var person = new { Name = "Jack", Age = 25 };
 Console.WriteLine(person.Name);
-person.Name = "John";
+// person.Name = "John";
 
 Console.ReadKey();
 
