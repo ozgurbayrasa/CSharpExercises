@@ -14,5 +14,41 @@ var orderedOddNumbers = numbers
     .Where(number => number % 2 == 1)
     .OrderBy(number => number);
 
+// Deferred Execution
+
+// This result of LINQ is returned as List.
+// Query is materialized so there won't be defereed execution.
+// Any change to 'words' list may not be shown.
+var shortWords = words.Where((word) => word.Length < 2).ToList();
+
+foreach (var word in shortWords)
+{
+    // It is executed here, since it is needed here.
+    // This allows us to work on lastly updated data.
+    Console.WriteLine(word);
+}
+
+words.Add("e"); 
+
+foreach (var word in shortWords)
+{
+    // 'e' won't be printed.
+    // Since query is materialized.
+    Console.WriteLine(word);
+}
+
+// Long words with LINQ
+var longWords = words.Where((word) =>
+{
+    Console.WriteLine("Querying: " + word);
+    return word.Length >= 2;
+});
+
+// Deferred Execution -> Query is called
+// when it is iterating in loop.
+foreach (var word in longWords)
+{
+    Console.WriteLine("Long Word: " + word);
+}
 
 Console.ReadKey();
