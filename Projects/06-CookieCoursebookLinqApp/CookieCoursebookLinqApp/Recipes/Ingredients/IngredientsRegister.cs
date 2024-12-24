@@ -16,15 +16,20 @@ public class IngredientsRegister : IIngredientsRegister
 
     public Ingredient GetById(int id)
     {
-        foreach (var ingredient in All)
+        // Filter by Id
+        var allIngredientsById = All.Where(ingredient => ingredient.Id == id);
+
+        if(allIngredientsById.Count() > 1)
         {
-            if (ingredient.Id == id)
-            {
-                return ingredient;
-            }
+            throw new InvalidOperationException("More than one ingredients have ID equal to " + id);
         }
 
-        return null;
+        // Returns default (null) if allIngredientsById is empty, which means no id matches
+        return allIngredientsById.FirstOrDefault();
+
+        // We can also verify if other id's duplicated by checking if Count() and Distinct() of ids
+        // are equal, if they're not it means there must be id duplication
+        // This mechanism can be used in a class like UniqueIngredientIdValidator : IValidator
     }
 }
 

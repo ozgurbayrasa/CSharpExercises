@@ -31,32 +31,34 @@ public class RecipesRepository : IRecipesRepository
 
     private Recipe RecipeFromString(string recipeFromFile)
     {
-        var textualIds = recipeFromFile.Split(Separator);
-        var ingredients = new List<Ingredient>();
+        // recipeFromFile -> 1,3,4,8,5,4 (recipe IDs)
+        // Split it using Seperator ','
+        // Then apply parse for every item "1" -> 1, "3" -> 3
+        // So we have int from string item.
+        // Then use GetById method for every item to get Ingredient
+        // Finally, make it to list -> Ingredient List
+        // Return recipe with this ingredient list.
 
-        foreach (var textualId in textualIds)
-        {
-            var id = int.Parse(textualId);
-            var ingredient = _ingredientsRegister.GetById(id);
-            ingredients.Add(ingredient);
-        }
+        var ingredients = recipeFromFile.Split(Separator)
+            .Select(int.Parse)
+            .Select(_ingredientsRegister.GetById)
+            .ToList();
 
         return new Recipe(ingredients);
     }
 
     public void Write(string filePath, List<Recipe> allRecipes)
     {
-        var recipesAsStrings = new List<string>();
-        foreach (var recipe in allRecipes)
-        {
-            var allIds = new List<int>();
-            foreach (var ingredient in recipe.Ingredients)
+        // Each recipe in recipes list, generate ingredient ids list and
+        // build string with it. (recipe --> "1,2,5,4" (ing id list as string))
+        var recipesAsStrings = allRecipes
+            .Select(recipe =>
             {
-                allIds.Add(ingredient.Id);
-            }
-            recipesAsStrings.Add(string.Join(Separator, allIds));
-        }
+                var allIngredientIds = recipe.Ingredients.Select(ingredient => ingredient.Id);
+                return string.Join(Separator, allIngredientIds);
+            });
 
-        _stringsRepository.Write(filePath, recipesAsStrings);
+        // Write that string into file.
+        _stringsRepository.Write(filePath, recipesAsStrings.ToList());
     }
 }
