@@ -89,6 +89,18 @@ var numbersArrayList = new ArrayList { 1, 2, 3 };
 // Boxing -> List is a list of reference types -> Be Careful.
 var numbersListI = new List<IComparable<int>> { 1, 2, 3 };
 
+string userInput = "Print Person";
+
+if (userInput == "Print Person")
+{
+    Person personJohn = new Person() { Name = "John", Age = 5};
+    Console.WriteLine(personJohn);
+}
+// personJohn won't be accessed later. 
+// So it will be cleand after some time by Garbage Collector (GC)
+
+GC.Collect(); // Manually collecting it but SHOULDN'T BE USED.
+
 Console.ReadLine();
 
 // Making value type paramater to reference type
