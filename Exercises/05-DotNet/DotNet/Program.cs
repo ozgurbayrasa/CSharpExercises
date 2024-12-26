@@ -1,5 +1,6 @@
 ﻿
 using System.Collections;
+using System.IO;
 
 var John = new Person { Name = "John", Age = 34 };
 
@@ -78,7 +79,7 @@ int unboxedNumber = (int)boxedNumber;
 
 // boxedNumber was int not short. Compiler cannot understand it.
 // Run-time error raises.
-short unboxedNumberNotExplicilty = (short) boxedNumber;
+// short unboxedNumberNotExplicilty = (short) boxedNumber;
 
 // No boxing -> Performance and memory efficient.
 var numbersList = new List<int> { 1, 2, 3 };
@@ -99,9 +100,36 @@ if (userInput == "Print Person")
 // personJohn won't be accessed later. 
 // So it will be cleand after some time by Garbage Collector (GC)
 
-GC.Collect(); // Manually collecting it but SHOULDN'T BE USED.
+// GC.Collect(); // Manually collecting it but SHOULDN'T BE USED.
 
-Console.ReadLine();
+
+// Dispose Method
+
+const string filePath = "file.txt";
+
+// "using"
+using (var writer = new FileWriter(filePath))
+{
+    writer.Write("some text");
+    writer.Write("some other text");
+}
+
+using var reader = new SpecificLineFromTextFileReader(filePath);
+var first = reader.ReadLineNumber(1);
+// If we don't implement reseting buffer and position of file
+// in ReadLineNumber, this will be empty. 
+// Because, it will continue from the line where it stopped 
+// from first call.
+var second = reader.ReadLineNumber(2);
+reader.Dispose();
+
+Console.WriteLine(first);
+Console.WriteLine(second);
+
+Console.WriteLine("Press any key to close.");
+Console.ReadKey();
+
+
 
 // Making value type paramater to reference type
 // So original value will be effected.
@@ -127,4 +155,55 @@ internal class Person
 {
     public string Name { get; set; }
     public int Age { get; set; }
+}
+
+
+public class FileWriter : IDisposable
+{
+    private readonly StreamWriter _streamWriter;
+
+    public FileWriter(string filePath)
+    {
+        _streamWriter = new StreamWriter(filePath, true);
+    }
+
+    public void Write(string text)
+    {
+        _streamWriter.WriteLine(text);
+        _streamWriter.Flush();
+    }
+
+    public void Dispose()
+    {
+        _streamWriter.Dispose();
+    }
+}
+
+public class SpecificLineFromTextFileReader : IDisposable
+{
+    private readonly StreamReader _streamReader;
+
+    public SpecificLineFromTextFileReader(string filePath)
+    {
+        _streamReader = new StreamReader(filePath);
+    }
+
+    public string ReadLineNumber(int lineNumber)
+    {
+        // Reset buffer and current position on file.
+        _streamReader.DiscardBufferedData();
+        _streamReader.BaseStream.Seek(0, SeekOrigin.Begin);
+
+        for(var i = 0; i < lineNumber - 1; i++)
+        {
+            _streamReader.ReadLine();
+        }
+
+        return _streamReader.ReadLine();
+    }
+
+    public void Dispose()
+    {
+        _streamReader.Dispose();
+    }
 }
