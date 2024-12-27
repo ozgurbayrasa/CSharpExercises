@@ -1,6 +1,7 @@
 ﻿
 using System.Collections;
 using System.IO;
+using DotNet;
 
 var John = new Person { Name = "John", Age = 34 };
 
@@ -126,6 +127,12 @@ reader.Dispose();
 Console.WriteLine(first);
 Console.WriteLine(second);
 
+
+// Reading CSV file.
+
+
+var data = new CSVReader().Read("sampleData.csv");
+
 Console.WriteLine("Press any key to close.");
 Console.ReadKey();
 
@@ -206,4 +213,6 @@ public class SpecificLineFromTextFileReader : IDisposable
     {
         _streamReader.Dispose();
     }
+
+
 }
