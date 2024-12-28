@@ -11,12 +11,16 @@ public class TableDataBuilder : ITableDataBuilder
 
         foreach (var row in csvData.Rows)
         {
+            // Why all dictionaries stored as string-object pairs.
+            // Value-types will be boxed which is memory and time waste.
             var newRowData = new Dictionary<string, object>();
 
             for (int columnIndex = 0; columnIndex < csvData.Columns.Length; ++columnIndex)
             {
                 var column = csvData.Columns[columnIndex];
                 string valueAsString = row[columnIndex];
+                // Memory waste when null is returned (we have many nulls)
+                // Why do we create a space for them?
                 newRowData[column] = ConvertValueToTargetType(valueAsString);
             }
 

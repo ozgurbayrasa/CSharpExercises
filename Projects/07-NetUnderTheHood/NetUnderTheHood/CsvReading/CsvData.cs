@@ -1,6 +1,4 @@
-﻿namespace CsvDataAccess.CsvReading;
-
-public class CsvData
+﻿public class CsvData
 {
     public string[] Columns { get; }
     public IEnumerable<string[]> Rows { get; }
