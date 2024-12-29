@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdvancedTypes.ExercisesAdvancedTypes
+﻿namespace AdvancedTypes.ExercisesAdvancedTypes
 {
     // Set Attribute usage for only properties.
     [AttributeUsage(AttributeTargets.Property)]
