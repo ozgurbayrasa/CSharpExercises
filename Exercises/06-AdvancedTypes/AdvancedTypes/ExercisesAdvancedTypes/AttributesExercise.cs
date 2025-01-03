@@ -1,6 +1,6 @@
 ﻿namespace AdvancedTypes.ExercisesAdvancedTypes
 {
-    // Set Attribute usage for only properties.
+    // Set attribute usage for only properties.
     [AttributeUsage(AttributeTargets.Property)]
     // Attribute class must be inherited.
     public class MustBeLargerThanAttribute : Attribute
