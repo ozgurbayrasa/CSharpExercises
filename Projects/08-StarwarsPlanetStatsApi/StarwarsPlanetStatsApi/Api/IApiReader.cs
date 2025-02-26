@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarwarsPlanetStatsApi.ApiReader
+namespace StarwarsPlanetStatsApi.Api
 {
     internal interface IApiReader
     {
-        public Task<string> Read(string baseAdress, string requestUri);
+        public Task<string> Read(string requestUri);
     }
 }
