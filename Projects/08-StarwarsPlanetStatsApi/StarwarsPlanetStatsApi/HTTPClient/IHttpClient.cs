@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StarwarsPlanetStatsApi.HTTPClient
 {
-    internal interface IHttpClient
+    public interface IHttpClient
     {
         public HttpClient GetClient();
     }

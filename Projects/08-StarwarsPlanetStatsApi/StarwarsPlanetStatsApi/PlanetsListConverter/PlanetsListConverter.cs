@@ -16,7 +16,13 @@ namespace StarwarsPlanetStatsApi.PlanetsListConverter
         {
             var rootResponse = JsonSerializer.Deserialize<StarwarsPlanetAPIRootResponse>(stringResponse);
 
-            return rootResponse!.Planets;
+            if(rootResponse is not null)
+            {
+                return rootResponse.Planets;
+            }
+
+            throw new NullReferenceException();
+            
         }
     }
 }

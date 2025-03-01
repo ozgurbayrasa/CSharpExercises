@@ -8,7 +8,7 @@ using StarwarsPlanetStatsApi.DataModels;
 
 namespace StarwarsPlanetStatsApi.UserIO
 {
-    internal class UserMessageCommand : IUserIO
+    internal class IOUserCommand : IUserIO
     {
         public void PrintInfoMessage()
         {
@@ -17,34 +17,32 @@ namespace StarwarsPlanetStatsApi.UserIO
             Console.WriteLine("population\ndiameter\nsurface water");
         }
 
-        public string GetPropertyFromUser()
+        public string GetPropertyFromUser(IEnumerable<string> validProperties)
         {
-            bool isValidInput = false;
-            string userResponse = string.Empty;
-            while (!isValidInput)
+            while (true)
             {
-                userResponse = Console.ReadLine();
+                string userResponse = Console.ReadLine()?.Trim();
 
-                if (userResponse is null)
+                if (string.IsNullOrWhiteSpace(userResponse) || !validProperties.Contains(userResponse))
                 {
-                    Console.WriteLine("Invalid choice!");
+                    PrintInvalidChoiceMessage();
                     continue;
                 }
 
-                if(userResponse.Contains("population") || userResponse.Contains("diameter") || userResponse.Contains("surface water"))
-                {
-                    isValidInput = true;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid choice!");
-                }
-                
+                return userResponse;
             }
 
-            return userResponse;
         }
 
-        
+        private void PrintInvalidChoiceMessage()
+        {
+            Console.WriteLine("Invalid choice! Please enter a valid property: population, diameter, or surface water.");
+        }
+
+        public void PrintStatsMessage(long minValue, long maxValue, string selectedProperty)
+        {
+            Console.WriteLine($"Max {selectedProperty}: {maxValue}");
+            Console.WriteLine($"Min {selectedProperty}: {minValue}");
+        }
     }
 }

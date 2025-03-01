@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace StarwarsPlanetStatsApi.DataModels
 {
-    public record PlanetDTO(
-        [property: JsonPropertyName("name")] string name,
-        [property: JsonPropertyName("diameter")] string diameter,
-        [property: JsonPropertyName("surface_water")] string surface_water,
-        [property: JsonPropertyName("population")] string population
+    public readonly record struct PlanetDTO(
+        [property: JsonPropertyName("name")] string Name,
+        [property: JsonPropertyName("diameter")] string Diameter,
+        [property: JsonPropertyName("surface_water")] string? SurfaceWater,
+        [property: JsonPropertyName("population")] string? Population
     );
 }

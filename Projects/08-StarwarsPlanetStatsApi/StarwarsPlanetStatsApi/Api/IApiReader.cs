@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StarwarsPlanetStatsApi.Api
 {
-    internal interface IApiReader
+    public interface IApiReader
     {
         public Task<string> Read(string requestUri);
     }

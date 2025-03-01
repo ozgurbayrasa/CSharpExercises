@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using StarwarsPlanetStatsApi.DataModels;
 
-namespace StarwarsPlanetStatsApi.TablePrinter
+namespace StarwarsPlanetStatsApi.Statistics
 {
-    public interface ITablePrinter
+    public interface IPlanetStatisticsAnalyzer
     {
-        public void Print(IEnumerable<PlanetDTO> enumarable);
+        void Analyze(IEnumerable<PlanetDTO> planetsList);
     }
 }

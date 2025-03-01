@@ -8,7 +8,7 @@ using StarwarsPlanetStatsApi.DataModels;
 
 namespace StarwarsPlanetStatsApi.TablePrinter
 {
-    internal class UniversalTablePrinter : ITablePrinter
+    public class UniversalTablePrinter : ITablePrinter
     {
         private const int padLength = 16;
         private readonly string[] headers = {"Name", "Diameter", "SurfaceWater", "Population" };
@@ -24,19 +24,19 @@ namespace StarwarsPlanetStatsApi.TablePrinter
             {
                 if(planet != null)
                 {
-                    Console.Write(planet.name.PadRight(padLength) + '|');
-                    Console.Write(planet.diameter.PadRight(padLength) + '|');
-                    if(!planet.surface_water.Equals("unknown"))
+                    Console.Write(planet.Name.PadRight(padLength) + '|');
+                    Console.Write(planet.Diameter.PadRight(padLength) + '|');
+                    if(!planet.SurfaceWater.Equals("unknown"))
                     {
-                        Console.Write(planet.surface_water.PadRight(padLength) + '|');
+                        Console.Write(planet.SurfaceWater.PadRight(padLength) + '|');
                     }
                     else
                     {
                         Console.Write(" ".PadRight(padLength) + '|');
                     }
-                    if(!planet.population.Equals("unknown"))
+                    if(!planet.Population.Equals("unknown"))
                     {
-                        Console.Write(planet.population.PadRight(padLength) + '|');
+                        Console.Write(planet.Population.PadRight(padLength) + '|');
                     }
                     else
                     {

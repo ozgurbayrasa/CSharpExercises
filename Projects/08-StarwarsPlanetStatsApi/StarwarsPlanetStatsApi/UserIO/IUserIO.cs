@@ -7,11 +7,12 @@ using StarwarsPlanetStatsApi.DataModels;
 
 namespace StarwarsPlanetStatsApi.UserIO
 {
-    internal interface IUserIO
+    public interface IUserIO
     {
         public void PrintInfoMessage();
-        public string GetPropertyFromUser();
 
-        public void PrintStatistics(string userRespose, IEnumerable<PlanetDTO> planetList);
+        public void PrintStatsMessage(long minValue, long maxValue, string selectedProperty);
+        public string GetPropertyFromUser(IEnumerable<string> propertiesList);
+
     }
 }
