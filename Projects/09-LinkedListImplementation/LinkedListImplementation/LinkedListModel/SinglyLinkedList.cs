@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LinkedListImplementation.LinkedListModel
 {
-    internal class SinglyLinkedList<T> : ILinkedList<T>
+    internal class SinglyLinkedList<T> : ILinkedList<T?>
     {
         private Node<T>? _head;
         private int _count;
@@ -26,6 +26,8 @@ namespace LinkedListImplementation.LinkedListModel
 
         // Linkedlist is not read-only.
         public bool IsReadOnly => false;
+
+        int ICollection<T?>.Count => throw new NotImplementedException();
 
         public void Add(T? item)
         {
@@ -61,9 +63,12 @@ namespace LinkedListImplementation.LinkedListModel
             throw new NotImplementedException();
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public IEnumerator<T?> GetEnumerator()
         {
-            throw new NotImplementedException();
+            foreach(var node in GetNodes())
+            {
+                yield return node.Value;
+            }
         }
 
         public bool Remove(T? item)
@@ -73,7 +78,23 @@ namespace LinkedListImplementation.LinkedListModel
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
+        }
+
+        private IEnumerable<Node<T>> GetNodes()
+        {
+            // No itaration if head is null.
+            if(_head is null)
+            {
+                yield break;
+            }
+
+            Node<T>? current = _head;
+            while(current is not null)
+            {
+                yield return current;
+                current = current.Next;
+            }
         }
     }
 }
