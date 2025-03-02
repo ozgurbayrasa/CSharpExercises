@@ -15,5 +15,11 @@ namespace LinkedListImplementation.LinkedListModel
         {
             Value = value;
         }
+
+        public override string ToString()
+        {
+            return $"Value: {Value}\n" +
+                $"Next: {(Next is null ? "empty" : Next.Value)}";
+        }
     }
 }

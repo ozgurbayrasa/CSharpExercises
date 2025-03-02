@@ -7,50 +7,43 @@ using System.Threading.Tasks;
 
 namespace LinkedListImplementation.LinkedListModel
 {
-    internal class LinkedList<T> : ILinkedList<T>
+    internal class SinglyLinkedList<T> : ILinkedList<T>
     {
-        public Node<T> Head { get; }
+        private Node<T>? _head;
+        private int _count;
 
-        public LinkedList()
+        public SinglyLinkedList()
         {
-            Head = null;
+            _head = null;
         }
-        public LinkedList(Node<T> head)
+        public SinglyLinkedList(Node<T> head)
         {
-            Head = head;
+            _head = head;
             head.Next = null;
         }
 
-        public int Count()
-        {
-            int count = 0;
-            Node<T> currentNode = Head;
+        public int Count() => _count;
 
-
-            while(currentNode.Next is not null)
-            {
-                currentNode = currentNode.Next;
-                count++;
-            }
-
-            return count;
-        }
-
+        // Linkedlist is not read-only.
         public bool IsReadOnly => false;
 
-        public void Add(T item)
+        public void Add(T? item)
         {
             throw new NotImplementedException();
         }
 
-        public void AddToEnd(T item)
+        public void AddToEnd(T? item)
         {
             throw new NotImplementedException();
         }
 
-        public void AddToFront(T item)
+        public void AddToFront(T? item)
         {
-            throw new NotImplementedException();
+            Node<T> nodeToAdd = new(item);
+            nodeToAdd.Next = _head;
+            // Setting it as new head.
+            _head = nodeToAdd;
+            _count++;
         }
 
         public void Clear()
@@ -58,12 +51,12 @@ namespace LinkedListImplementation.LinkedListModel
             throw new NotImplementedException();
         }
 
-        public bool Contains(T item)
+        public bool Contains(T? item)
         {
             throw new NotImplementedException();
         }
 
-        public void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(T?[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }
@@ -73,7 +66,7 @@ namespace LinkedListImplementation.LinkedListModel
             throw new NotImplementedException();
         }
 
-        public bool Remove(T item)
+        public bool Remove(T? item)
         {
             throw new NotImplementedException();
         }
