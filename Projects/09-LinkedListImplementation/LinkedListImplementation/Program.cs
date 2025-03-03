@@ -8,6 +8,9 @@ list.AddToFront("a");
 list.AddToFront("b");
 list.AddToFront("c");
 
+list.Add("e");
+list.Add("f");
+
 foreach (var item in list)
 {
     Console.Write(item + " --> ");

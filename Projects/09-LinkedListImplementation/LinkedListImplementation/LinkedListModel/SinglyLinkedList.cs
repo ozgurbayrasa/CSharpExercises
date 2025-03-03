@@ -31,20 +31,30 @@ namespace LinkedListImplementation.LinkedListModel
 
         public void Add(T? item)
         {
-            throw new NotImplementedException();
+            AddToEnd(item);
         }
 
         public void AddToEnd(T? item)
         {
-            throw new NotImplementedException();
+            Node<T> nodeToEnd = new(item);
+            if(_head is null)
+            {
+                _head = nodeToEnd;
+            }
+            else
+            {
+                Node<T> tail = GetNodes().Last();
+                tail.Next = nodeToEnd;
+            }
+            _count++;
         }
 
         public void AddToFront(T? item)
         {
-            Node<T> nodeToAdd = new(item);
-            nodeToAdd.Next = _head;
+            Node<T> nodeToFront = new(item);
+            nodeToFront.Next = _head;
             // Setting it as new head.
-            _head = nodeToAdd;
+            _head = nodeToFront;
             _count++;
         }
 
