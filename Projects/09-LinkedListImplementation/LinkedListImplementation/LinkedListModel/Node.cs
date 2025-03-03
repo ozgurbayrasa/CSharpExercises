@@ -8,7 +8,7 @@ namespace LinkedListImplementation.LinkedListModel
 {
     public class Node<T>
     {
-        public T? Value { get; set; }
+        public T? Value { get; }
         public Node<T>? Next { get; set; }
 
         public Node(T? value)

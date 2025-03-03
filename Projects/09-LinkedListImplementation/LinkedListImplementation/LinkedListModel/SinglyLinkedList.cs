@@ -137,11 +137,6 @@ namespace LinkedListImplementation.LinkedListModel
 
         private IEnumerable<Node<T>> GetNodes()
         {
-            // No itaration if head is null.
-            if(_head is null)
-            {
-                yield break;
-            }
 
             Node<T>? current = _head;
             while(current is not null)
