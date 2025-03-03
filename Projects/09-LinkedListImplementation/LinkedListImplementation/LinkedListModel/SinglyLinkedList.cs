@@ -71,12 +71,32 @@ namespace LinkedListImplementation.LinkedListModel
 
         public bool Contains(T? item)
         {
-            throw new NotImplementedException();
+            if(item is null)
+            {
+                return GetNodes().Any(node => node.Value is null);
+            }
+            return GetNodes().Any(node => item.Equals(node.Value));
         }
 
         public void CopyTo(T?[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            if (array is null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+            if (arrayIndex < 0 || arrayIndex >= array.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex));
+            }
+            if(array.Length < _count + arrayIndex)
+            {
+                throw new ArgumentException("Array is not long enough!");
+            }
+            foreach(var node in GetNodes())
+            {
+                array[arrayIndex] = node.Value;
+                arrayIndex++;
+            }
         }
 
         public IEnumerator<T?> GetEnumerator()
