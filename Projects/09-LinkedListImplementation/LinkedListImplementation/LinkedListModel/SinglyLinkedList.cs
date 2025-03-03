@@ -60,7 +60,13 @@ namespace LinkedListImplementation.LinkedListModel
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            Node<T>? current = _head;
+            while (current is not null)
+            {
+                Node<T>? temporary = current;
+                current = current.Next;
+                temporary.Next = null;   
+            }
         }
 
         public bool Contains(T? item)
@@ -83,7 +89,25 @@ namespace LinkedListImplementation.LinkedListModel
 
         public bool Remove(T? item)
         {
-            throw new NotImplementedException();
+            Node<T>? predecessor = null;
+            foreach (var currentNode in GetNodes())
+            {
+                if ((currentNode.Value is null && item is null) || ((currentNode.Value is not null) && currentNode.Value.Equals(item)))
+                {
+                    if(predecessor is null)
+                    {
+                        _head = currentNode.Next;
+                    }
+                    else {
+                       predecessor.Next = currentNode.Next;
+                    }
+
+                    --_count;
+                    return true;
+                }
+                predecessor = currentNode;
+            }
+            return false;
         }
 
         IEnumerator IEnumerable.GetEnumerator()

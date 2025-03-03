@@ -11,6 +11,9 @@ list.AddToFront("c");
 list.Add("e");
 list.Add("f");
 
+list.Remove("b");
+list.Remove("f");
+
 foreach (var item in list)
 {
     Console.Write(item + " --> ");
