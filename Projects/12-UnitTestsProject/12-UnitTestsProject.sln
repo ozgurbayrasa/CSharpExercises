@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestsProject", "UnitTestsProject\UnitTestsProject.csproj", "{01988565-7244-4614-819A-B6E6AB8CF2DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestsProjectTests", "FibonacciTests\UnitTestsProjectTests.csproj", "{F91417E2-3AB3-4B74-AF40-6B3EE3393DDB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01988565-7244-4614-819A-B6E6AB8CF2DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01988565-7244-4614-819A-B6E6AB8CF2DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01988565-7244-4614-819A-B6E6AB8CF2DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01988565-7244-4614-819A-B6E6AB8CF2DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F91417E2-3AB3-4B74-AF40-6B3EE3393DDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F91417E2-3AB3-4B74-AF40-6B3EE3393DDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F91417E2-3AB3-4B74-AF40-6B3EE3393DDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F91417E2-3AB3-4B74-AF40-6B3EE3393DDB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
