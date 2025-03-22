@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceRollGameForTesting", "DiceRollGameForTesting\DiceRollGameForTesting.csproj", "{258D2B02-5C1A-45BA-86CC-1643399B3FD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuessingGameTests", "GuessingGameTests\GuessingGameTests.csproj", "{DA7FCFFB-F30E-4C84-8911-73CE2201D590}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{258D2B02-5C1A-45BA-86CC-1643399B3FD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{258D2B02-5C1A-45BA-86CC-1643399B3FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{258D2B02-5C1A-45BA-86CC-1643399B3FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{258D2B02-5C1A-45BA-86CC-1643399B3FD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA7FCFFB-F30E-4C84-8911-73CE2201D590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA7FCFFB-F30E-4C84-8911-73CE2201D590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA7FCFFB-F30E-4C84-8911-73CE2201D590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA7FCFFB-F30E-4C84-8911-73CE2201D590}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
