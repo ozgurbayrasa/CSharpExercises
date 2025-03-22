@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using TestCases;
 
 
@@ -77,8 +79,6 @@ public class EnumerableExtensionsTests
         // Assert: Validate the result
         Assert.That(expected, Is.EqualTo(result),
             $"For input {inputAsString}, the result shall be {expected} but it was {result}.");
-
-        Assert.Throws<ArgumentNullException>(() => input.SumOfEvenNumbers());
     }
 
     [Test]
@@ -88,10 +88,50 @@ public class EnumerableExtensionsTests
         IEnumerable<int>? input = null;
 
         // Act & Assert: Check if the method throws a NullReferenceException
-        var exception = Assert.Throws<NullReferenceException>(
+        var exception = Assert.Throws<ArgumentNullException>(
             () => input!.SumOfEvenNumbers());
 
         // Bad Practice: Multiple asserts in a single test
         // Assert.That("abc", Is.EqualTo(exception.message));
+    }
+
+
+    // Testing dependent classes.
+    [Test]
+    public void Read_ShallProduceResultWithDataOfPersonReadFromTheDatabase()
+    {
+        // Arrange: Create a mock database connection
+        var databaseConnectionMock = new Mock<IDatabaseConnection>();
+        databaseConnectionMock
+            .Setup(mock => mock.GetById(5))
+            .Returns(new Person(5, "John", "Smith"));
+
+       
+
+        // Create an instance of the class being tested from the mock.
+        var personalDataReader = new PersonalDataReader(
+            databaseConnectionMock.Object);
+
+        // Act: Call the method being tested
+        string result = personalDataReader.Read(5);
+
+        ClassicAssert.AreEqual("(Id: 5) John Smith", result);
+    }
+
+    public void Save_ShallCallTheWriteMethod_WithCorrectArguments()
+    {
+        var databaseConnectionMock = new Mock<IDatabaseConnection>();
+        var personalDataReader = new PersonalDataReader(databaseConnectionMock.Object);
+
+        // Create a person object to be saved
+        var personToBeSaved = new Person(10, "Jane", "Miller");
+
+        // Call the method being tested
+        personalDataReader.Save(personToBeSaved);
+
+        // Verify that the Write method inside Save was called with the correct arguments.
+        databaseConnectionMock.Verify(
+            mock => mock.Write(personToBeSaved.Id, personToBeSaved));
+
     }
 }

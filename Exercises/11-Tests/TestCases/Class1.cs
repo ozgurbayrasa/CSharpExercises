@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
+
 // Making the internal classes visible to the test project
 // Unfortuneately, name of the assembly is hardcoded.
 [assembly: InternalsVisibleTo("Tests")]
