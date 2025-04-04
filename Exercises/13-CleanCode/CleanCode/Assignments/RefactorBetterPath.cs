@@ -8,7 +8,6 @@ namespace CleanCode.Assignments
 {
     internal class RefactorBetterPath
     {
-        {
         //you may rename the parameters of this method,
         //but do not change their order or type
         public static List<int>? ChooseBetterPath_Refactored(
@@ -16,7 +15,58 @@ namespace CleanCode.Assignments
             List<int> secondaryPathSectionLengths,
             int maxAcceptableSectionLength)
         {
-            //your code goes here
+            if(IsLengthValid(primaryPathSectionsLengths) && IsLengthValid(secondaryPathSectionLengths))
+            {
+                bool isLengths1Valid = CompareMaxLength(primaryPathSectionsLengths, maxAcceptableSectionLength);
+                bool isLengths2Valid = CompareMaxLength(secondaryPathSectionLengths, maxAcceptableSectionLength);
+
+                if (!isLengths1Valid && !isLengths2Valid)
+                {
+                    return null;
+                }
+                else if (isLengths1Valid && isLengths2Valid)
+                {
+                    if (primaryPathSectionsLengths.Sum() <= secondaryPathSectionLengths.Sum())
+                    {
+                        return primaryPathSectionsLengths;
+                    }
+                    return secondaryPathSectionLengths;
+                }
+                else if (isLengths1Valid)
+                {
+                    return primaryPathSectionsLengths;
+                }
+                return secondaryPathSectionLengths;
+            }
+            else
+            {
+                throw new ArgumentException(
+                        "The input collections can't contain negative lengths.");
+            }
+        }
+
+        private static bool IsLengthValid(List<int> pathLengths)
+        {
+            foreach (var number in pathLengths)
+            {
+                if (number < 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static bool CompareMaxLength(IEnumerable<int> lengths, int maxLength)
+        {
+            foreach (var number in lengths)
+            {
+                if (number > maxLength)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
 
