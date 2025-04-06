@@ -1,6 +1,8 @@
-﻿for (int i = 0; i < 10; i++)
+﻿Pwd pwd = new Pwd(new RandomProvidor());
+
+for (int i = 0; i < 10; i++)
 {
-    Console.WriteLine(Pwd.Generate(5, 10, false));
+    Console.WriteLine(pwd.Generate(5, 10, false));
 }
 Console.ReadKey();
 
