@@ -6,9 +6,14 @@ Console.ReadKey();
 
 public class Pwd
 {
-    private static readonly Random rand = new Random();
+    private readonly IRandomProvider _random;
 
-    public static string Generate(
+    public Pwd(IRandomProvider random)
+    {
+        _random = random;
+    }
+
+    public string Generate(
         int left, int right, bool useSpecial)
     {
         //validate max and min length
@@ -24,14 +29,35 @@ public class Pwd
         }
 
         //randomly pick the length of password between left and right range
-        var l = rand.Next(left, right + 1);
+        var l = _random.Next(left, right + 1);
 
         //generate random string
         var chars = useSpecial ?
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=" :
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-        return new string(Enumerable.Repeat(chars, l).Select(chars => chars[rand.Next(chars.Length)]).ToArray());
+        return new string(Enumerable.Repeat(chars, l).Select(chars => chars[_random.Next(chars.Length)]).ToArray());
+    }
+}
+
+public interface IRandomProvider
+{
+    int Next(int minValue, int maxValue);
+
+    int Next(int maxValue);
+}
+
+public class RandomProvidor : IRandomProvider
+{
+    private readonly Random _random = new Random();
+    public int Next(int minValue, int maxValue)
+    {
+        return _random.Next(minValue, maxValue);
+    }
+
+    public int Next(int maxValue)
+    {
+        return _random.Next(maxValue);
     }
 }
 
