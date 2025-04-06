@@ -1,4 +1,4 @@
-﻿Pwd pwd = new Pwd(new RandomProvidor());
+﻿PasswordGenerator pwd = new PasswordGenerator(new RandomProvidor());
 
 for (int i = 0; i < 10; i++)
 {
@@ -6,39 +6,41 @@ for (int i = 0; i < 10; i++)
 }
 Console.ReadKey();
 
-public class Pwd
+public class PasswordGenerator
 {
     private readonly IRandomProvider _random;
 
-    public Pwd(IRandomProvider random)
+    public PasswordGenerator(IRandomProvider random)
     {
         _random = random;
     }
 
     public string Generate(
-        int left, int right, bool useSpecial)
+        int minValue, int maxValue, bool isSpecialLetter)
     {
         //validate max and min length
-        if (left < 1)
+        if (minValue < 1)
         {
             throw new ArgumentOutOfRangeException(
                 $"leftRange must be greater than 0");
         }
-        if (right < left)
+        if (maxValue < minValue)
         {
             throw new ArgumentOutOfRangeException(
                 $"leftRange must be smaller than rightRange");
         }
 
         //randomly pick the length of password between left and right range
-        var l = _random.Next(left, right + 1);
+        var passwordLength = _random.Next(minValue, maxValue + 1);
 
         //generate random string
-        var chars = useSpecial ?
+        var includedPasswordLetters = isSpecialLetter ?
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=" :
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-        return new string(Enumerable.Repeat(chars, l).Select(chars => chars[_random.Next(chars.Length)]).ToArray());
+        return new string(Enumerable.Repeat(includedPasswordLetters, passwordLength)
+            .Select(characters => 
+            characters[_random.Next(characters.Length)]).ToArray());
     }
 }
 
