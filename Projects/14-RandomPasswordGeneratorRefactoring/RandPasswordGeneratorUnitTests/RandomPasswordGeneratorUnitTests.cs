@@ -9,6 +9,9 @@ namespace RandPasswordGeneratorUnitTests
     [TestFixture]
     public class RandomPasswordGeneratorUnitTests
     {
+        private string allowedCharactersOnlyNonSpeacials = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        private string allowedCharactersWithSpecials = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=";
+
         private PasswordGenerator _cut; // Class under test
         private Mock<IRandomProvider> _randomProviderMock;
 
@@ -49,8 +52,46 @@ namespace RandPasswordGeneratorUnitTests
             Assert.DoesNotThrow(() => _cut.Generate(minvalue, maxValue, isSpecialLetter));
         }
 
+        [TestCase(true)]
+        public void Generate_ShallIncludeSpecialLetters_IfIsSpeacialLetterIsTrue(bool isSpeacialLetter)
+        {
+            // Arrange
+            int minValue = 5;
+            int maxValue = 10;
 
-        
+            // Act
+            var result = _cut.Generate(minValue, maxValue, isSpeacialLetter);
+            
+            // Assert
+            Assert.That(result.All(passwordCharacter => allowedCharactersWithSpecials.Contains(passwordCharacter)));
+        }
+
+        [TestCase(false)]
+        public void Generate_ShallNotIncludeSpecialLetters_IfIsSpeacialLetterIsFalse(bool isSpeacialLetter)
+        {
+            // Arrange
+            int minValue = 5;
+            int maxValue = 10;
+
+            string nonSpecialCharachters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            string speacialCharacters = "!@#$%^&*()_-+=";
+
+            SetupRandomToSelectCharacterIndex(allowedCharactersWithSpecials.Length - 1);
+
+
+            // Act
+            var result = _cut.Generate(minValue, maxValue, isSpeacialLetter);
+            // Assert
+            Assert.That(result.All(passwordCharacter => allowedCharactersOnlyNonSpeacials.Contains(passwordCharacter) && 
+                                                        !allowedCharactersWithSpecials.Contains(passwordCharacter)));
+        }
+
+        private void SetupRandomToSelectCharacterIndex(int index)
+        {
+            var sequence = _randomProviderMock.Setup(mock => mock.Next(It.IsAny<int>()));
+            sequence.Returns(index); 
+        }
+
 
     }
 }
