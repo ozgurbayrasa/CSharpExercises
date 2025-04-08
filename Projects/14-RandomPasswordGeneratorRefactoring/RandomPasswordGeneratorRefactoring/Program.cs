@@ -35,7 +35,7 @@ public class PasswordGenerator
 
         //generate random string
         var includedPasswordLetters = isSpecialLetter ?
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=" :
+                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=" :
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
         return new string(Enumerable.Repeat(includedPasswordLetters, passwordLength)

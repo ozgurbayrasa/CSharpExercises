@@ -59,6 +59,11 @@ namespace RandPasswordGeneratorUnitTests
             int minValue = 5;
             int maxValue = 10;
 
+            int fixedLength = 5;
+
+            SetupRandomToSelectFixedLenght(fixedLength);
+            SetupRandomToSelectCharacterIndex(allowedCharactersWithSpecials.Length - 1);
+
             // Act
             var result = _cut.Generate(minValue, maxValue, isSpeacialLetter);
             
@@ -73,10 +78,10 @@ namespace RandPasswordGeneratorUnitTests
             int minValue = 5;
             int maxValue = 10;
 
-            string nonSpecialCharachters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            string speacialCharacters = "!@#$%^&*()_-+=";
+            int fixedLength = 5;
 
-            SetupRandomToSelectCharacterIndex(allowedCharactersWithSpecials.Length - 1);
+            SetupRandomToSelectFixedLenght(fixedLength);
+            SetupRandomToSelectCharacterIndex(allowedCharactersOnlyNonSpeacials.Length - 1);
 
 
             // Act
@@ -90,6 +95,12 @@ namespace RandPasswordGeneratorUnitTests
         {
             var sequence = _randomProviderMock.Setup(mock => mock.Next(It.IsAny<int>()));
             sequence.Returns(index); 
+        }
+
+        private void SetupRandomToSelectFixedLenght(int lenght)
+        {
+            var sequence = _randomProviderMock.Setup(mock => mock.Next(It.IsAny<int>(), It.IsAny<int>()));
+            sequence.Returns(lenght);
         }
 
 
