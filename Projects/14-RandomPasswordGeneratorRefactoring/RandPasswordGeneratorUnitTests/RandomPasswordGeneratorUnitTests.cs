@@ -10,7 +10,8 @@ namespace RandPasswordGeneratorUnitTests
     public class RandomPasswordGeneratorUnitTests
     {
         private string allowedCharactersOnlyNonSpeacials = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        private string allowedCharactersWithSpecials = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=";
+        private string allowedCharactersOnlySpeacials = "!@#$%^&*()_-+=";
+        private string allAllowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=";
 
         private PasswordGenerator _cut; // Class under test
         private Mock<IRandomProvider> _randomProviderMock;
@@ -61,14 +62,14 @@ namespace RandPasswordGeneratorUnitTests
 
             int fixedLength = 5;
 
-            SetupRandomToSelectFixedLenght(fixedLength);
-            SetupRandomToSelectCharacterIndex(allowedCharactersWithSpecials.Length - 1);
+            SetupRandomToSelectFixedLength(fixedLength);
+            SetupRandomToSelectCharacterIndex(allAllowedCharacters.Length - 1);
 
             // Act
             var result = _cut.Generate(minValue, maxValue, isSpeacialLetter);
             
             // Assert
-            Assert.That(result.All(passwordCharacter => allowedCharactersWithSpecials.Contains(passwordCharacter)));
+            Assert.That(result.All(passwordCharacter => allAllowedCharacters.Contains(passwordCharacter)));
         }
 
         [TestCase(false)]
@@ -80,7 +81,7 @@ namespace RandPasswordGeneratorUnitTests
 
             int fixedLength = 5;
 
-            SetupRandomToSelectFixedLenght(fixedLength);
+            SetupRandomToSelectFixedLength(fixedLength);
             SetupRandomToSelectCharacterIndex(allowedCharactersOnlyNonSpeacials.Length - 1);
 
 
@@ -88,7 +89,7 @@ namespace RandPasswordGeneratorUnitTests
             var result = _cut.Generate(minValue, maxValue, isSpeacialLetter);
             // Assert
             Assert.That(result.All(passwordCharacter => allowedCharactersOnlyNonSpeacials.Contains(passwordCharacter) && 
-                                                        !allowedCharactersWithSpecials.Contains(passwordCharacter)));
+                                                        !allowedCharactersOnlySpeacials.Contains(passwordCharacter)));
         }
 
         private void SetupRandomToSelectCharacterIndex(int index)
@@ -97,10 +98,10 @@ namespace RandPasswordGeneratorUnitTests
             sequence.Returns(index); 
         }
 
-        private void SetupRandomToSelectFixedLenght(int lenght)
+        private void SetupRandomToSelectFixedLength(int length)
         {
             var sequence = _randomProviderMock.Setup(mock => mock.Next(It.IsAny<int>(), It.IsAny<int>()));
-            sequence.Returns(lenght);
+            sequence.Returns(length);
         }
 
 
