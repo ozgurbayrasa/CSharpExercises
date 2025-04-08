@@ -18,7 +18,26 @@ public class PasswordGenerator
     public string Generate(
         int minValue, int maxValue, bool isSpecialLetter)
     {
-        //validate max and min length
+        ValidateRange(minValue, maxValue);
+
+        var passwordLength = _random.Next(minValue, maxValue + 1);
+
+        return GenerateRandomPassword(isSpecialLetter, passwordLength);
+    }
+
+    private string GenerateRandomPassword(bool isSpecialLetter, int passwordLength)
+    {
+        var includedPasswordLetters = isSpecialLetter ?
+                            "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=" :
+                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        return new string(Enumerable.Repeat(includedPasswordLetters, passwordLength)
+            .Select(characters =>
+            characters[_random.Next(characters.Length)]).ToArray());
+    }
+
+    private static void ValidateRange(int minValue, int maxValue)
+    {
         if (minValue < 1)
         {
             throw new ArgumentOutOfRangeException(
@@ -29,18 +48,6 @@ public class PasswordGenerator
             throw new ArgumentOutOfRangeException(
                 $"leftRange must be smaller than rightRange");
         }
-
-        //randomly pick the length of password between left and right range
-        var passwordLength = _random.Next(minValue, maxValue + 1);
-
-        //generate random string
-        var includedPasswordLetters = isSpecialLetter ?
-                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=" :
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-        return new string(Enumerable.Repeat(includedPasswordLetters, passwordLength)
-            .Select(characters => 
-            characters[_random.Next(characters.Length)]).ToArray());
     }
 }
 
